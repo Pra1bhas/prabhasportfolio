@@ -95,7 +95,7 @@ html, body {
 @layer base {
   * { border-color: var(--color-border); }
   h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
-  ::selection { background: oklch(0.82 0.16 195 / 0.35); color: oklch(0.98 0.01 0); }
+  ::selection { background: oklch(Builder(0.72 0 0 / 0.35); color: oklch(0.98 0 0); }
 }
 
 @utility text-gradient-accent {
