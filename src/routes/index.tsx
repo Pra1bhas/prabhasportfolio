@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import LightRays from "@/components/LightRays";
-import deskImage from "@/assets/desk-illustration.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
