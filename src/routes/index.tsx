@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import LightRays from "@/components/LightRays";
-import deskImage from "@/assets/desk-illustration.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,15 +39,6 @@ function HomePage() {
           className="absolute inset-0"
         />
       </div>
-
-      {/* Desk illustration at bottom */}
-      <img
-        src={deskImage}
-        alt=""
-        width={1536}
-        height={1024}
-        className="pointer-events-none absolute bottom-0 left-1/2 z-10 w-[min(1400px,100%)] -translate-x-1/2 select-none opacity-90"
-      />
 
       {/* Title */}
       <div className="relative z-20 flex min-h-screen flex-col items-center justify-start px-6 pt-[18vh] text-center">
