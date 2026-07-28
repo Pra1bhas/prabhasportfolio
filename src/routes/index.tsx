@@ -25,7 +25,7 @@ function HomePage() {
     <section className="relative min-h-screen w-full overflow-hidden bg-black">
       <LightRays
         raysOrigin="top-center"
-        raysColor="#00ffff"
+        raysColor="#a0a0a0"
         raysSpeed={1.5}
         lightSpread={0.8}
         rayLength={1.2}
@@ -33,6 +33,7 @@ function HomePage() {
         mouseInfluence={0.1}
         noiseAmount={0.1}
         distortion={0.05}
+        saturation={0}
         className="absolute inset-0"
       />
     </section>
