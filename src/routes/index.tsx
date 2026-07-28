@@ -41,18 +41,7 @@ function HomePage() {
       </div>
 
       {/* Title */}
-      <div className="relative z-20 flex min-h-screen flex-col items-center justify-start px-6 pt-[18vh] text-center">
-        {/* Clapperboard glyph */}
-        <div className="mb-6 flex items-center gap-3 text-white/80">
-          <span className="h-px w-10 bg-white/30" />
-          <svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.2">
-            <path d="M6 18h36v22H6z" />
-            <path d="M6 18l4-8 8 4-4 8zM18 14l4-8 8 4-4 8zM30 14l4-8 8 4-4 8z" />
-            <path d="M22 24l8 5-8 5z" fill="currentColor" />
-          </svg>
-          <span className="h-px w-10 bg-white/30" />
-        </div>
-
+      <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <h1
           className="font-display text-white"
           style={{
