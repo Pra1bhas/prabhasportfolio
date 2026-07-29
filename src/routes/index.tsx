@@ -135,27 +135,8 @@ function HomePage() {
         </div>
       </section>
 
-      {/* CONTENT with Lightfall backdrop */}
-      <div className="relative isolate">
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="sticky top-0 h-screen w-full opacity-50">
-            <Lightfall
-              colors={['#A6C8FF', '#9AA7FF', '#FFFFFF']}
-              backgroundColor="#000000"
-              speed={0.7}
-              streakCount={2}
-              streakWidth={1.1}
-              streakLength={1}
-              glow={0.8}
-              density={0.4}
-              twinkle={0.4}
-              zoom={2}
-              backgroundGlow={0.4}
-              opacity={0.5}
-              mouseInteraction={false}
-            />
-          </div>
-        </div>
+
+
 
       {/* ABOUT */}
       <section id="about" className="scroll-mt-20 relative px-6 pt-32 pb-24">
@@ -339,10 +320,23 @@ function HomePage() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="scroll-mt-20 relative overflow-hidden py-24">
-        <div className="pointer-events-none absolute inset-0 opacity-25">
-          <img src={ctaBg} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black" />
+      <section id="contact" className="scroll-mt-20 relative isolate overflow-hidden py-24">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-50">
+          <Lightfall
+            colors={['#A6C8FF', '#9AA7FF', '#FFFFFF']}
+            backgroundColor="#000000"
+            speed={0.7}
+            streakCount={2}
+            streakWidth={1.1}
+            streakLength={1}
+            glow={0.8}
+            density={0.4}
+            twinkle={0.4}
+            zoom={2}
+            backgroundGlow={0.4}
+            opacity={0.5}
+            mouseInteraction={false}
+          />
         </div>
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
@@ -360,7 +354,7 @@ function HomePage() {
           <ContactBlock />
         </div>
       </section>
-      </div>
+
     </div>
 
   );
