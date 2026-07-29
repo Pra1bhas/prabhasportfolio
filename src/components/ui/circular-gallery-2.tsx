@@ -367,8 +367,14 @@ class Media {
     }
 
     this.speed = scroll.current - scroll.last;
-    this.program.uniforms.uTime.value += 0.04;
-    this.program.uniforms.uSpeed.value = this.speed;
+    // Reduced motion: freeze the ripple/wobble shader animation.
+    if (!this.motion.reduced) {
+      this.program.uniforms.uTime.value += 0.04;
+      this.program.uniforms.uSpeed.value = this.speed;
+    } else {
+      this.program.uniforms.uSpeed.value = 0;
+    }
+
 
     const planeOffset = this.plane.scale.x / 2;
     const viewportOffset = this.viewport.width / 2;
