@@ -758,8 +758,11 @@ class App {
     this.boundOnTouchDown = this.onTouchDown;
     this.boundOnTouchMove = this.onTouchMove;
     this.boundOnTouchUp = this.onTouchUp;
+    this.boundOnPointerLeave = this.onPointerLeave;
 
+    this.container.addEventListener("mouseleave", this.boundOnPointerLeave);
     window.addEventListener("resize", this.boundOnResize);
+
     this.container.addEventListener("mousedown", this.boundOnTouchDown);
     window.addEventListener("mousemove", this.boundOnTouchMove);
     window.addEventListener("mouseup", this.boundOnTouchUp);
