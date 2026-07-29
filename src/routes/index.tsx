@@ -1,13 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   Mail,
   Phone,
   MapPin,
   Instagram,
   Twitter,
-  Send,
-  Check,
   Play,
   Film,
 } from "lucide-react";
@@ -16,6 +13,17 @@ import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
+
+const brands = [
+  "Aurora Watches",
+  "Kori Skincare",
+  "Vaayu",
+  "Nova Coffee",
+  "Studio Black",
+  "Foundry Films",
+  "Monarch Media",
+  "Kite & Co",
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
