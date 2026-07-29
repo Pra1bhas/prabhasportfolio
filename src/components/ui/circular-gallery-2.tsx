@@ -29,6 +29,11 @@ interface CircularGalleryProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollEase?: number;
   /** Continuous auto scroll speed (0 disables). */
   autoScroll?: number;
+  /** Honour the OS "prefers-reduced-motion" setting. @default true */
+  respectReducedMotion?: boolean;
+  /** Auto-scroll multiplier applied under reduced motion (0 pauses). @default 0 */
+  reducedAutoScrollFactor?: number;
+
   fontClassName?: string;
 }
 
