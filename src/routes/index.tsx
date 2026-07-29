@@ -349,7 +349,7 @@ function BrandMarquee() {
         <span className="vox-text text-lg font-semibold uppercase tracking-[0.35em] sm:text-2xl">Brands I&rsquo;ve Worked With</span>
         <span className="h-px w-12 bg-white/30" />
       </div>
-      <div className="relative mt-6 h-[420px] w-full text-white sm:h-[480px]">
+      <div className="relative mt-8 h-[480px] w-full text-white sm:h-[560px]">
         <CircularGallery
           items={galleryItems}
           bend={2}
