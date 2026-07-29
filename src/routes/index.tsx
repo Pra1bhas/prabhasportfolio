@@ -1,13 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   Mail,
   Phone,
   MapPin,
   Instagram,
   Twitter,
-  Send,
-  Check,
   Play,
   Film,
 } from "lucide-react";
@@ -16,6 +13,17 @@ import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
+
+const brands = [
+  "Aurora Watches",
+  "Kori Skincare",
+  "Vaayu",
+  "Nova Coffee",
+  "Studio Black",
+  "Foundry Films",
+  "Monarch Media",
+  "Kite & Co",
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -220,7 +228,7 @@ function HomePage() {
       </section>
 
       {/* TOOLKIT */}
-      <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-0 pt-24">
+      <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-24 pt-24">
         <div className="pointer-events-none absolute inset-0 opacity-20">
           <img src={toolkitBg} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black" />
@@ -244,6 +252,7 @@ function HomePage() {
             <OrbitingToolkit className="w-full" />
           </div>
 
+          <BrandMarquee />
         </div>
       </section>
 
@@ -289,95 +298,61 @@ function HomePage() {
 }
 
 function ContactBlock() {
-  const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", project: "", message: "" });
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-  };
-  const inputCls =
-    "w-full rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-white/10 transition";
-
   return (
-    <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.3fr]">
-      <div className="space-y-4">
-        {[
-          { icon: Mail, label: "Email", value: "prabhaspasupuleti@gmail.com", href: "mailto:prabhaspasupuleti@gmail.com" },
-          { icon: Phone, label: "Phone", value: "+91 87121 65611", href: "tel:+918712165611" },
-          { icon: MapPin, label: "Location", value: "Hyderabad, India" },
-          { icon: Instagram, label: "Instagram", value: "@prabhas.pasupuleti", href: "https://instagram.com/prabhas.pasupuleti" },
-          { icon: Twitter, label: "X (Twitter)", value: "@prabhasnaidu30", href: "https://x.com/prabhasnaidu30" },
-        ].map((c) => {
-          const Inner = (
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur transition hover:border-white/30">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/[0.05]">
-                <c.icon className="h-4 w-4 text-white" />
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{c.label}</div>
-                <div className="text-sm font-medium text-white">{c.value}</div>
-              </div>
+    <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        { icon: Mail, label: "Email", value: "prabhaspasupuleti@gmail.com", href: "mailto:prabhaspasupuleti@gmail.com" },
+        { icon: Phone, label: "Phone", value: "+91 87121 65611", href: "tel:+918712165611" },
+        { icon: MapPin, label: "Location", value: "Hyderabad, India" },
+        { icon: Instagram, label: "Instagram", value: "@prabhas.pasupuleti", href: "https://instagram.com/prabhas.pasupuleti" },
+        { icon: Twitter, label: "X (Twitter)", value: "@prabhasnaidu30", href: "https://x.com/prabhasnaidu30" },
+      ].map((c) => {
+        const Inner = (
+          <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur transition hover:border-white/30">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[0.05]">
+              <c.icon className="h-4 w-4 text-white" />
             </div>
-          );
-          return c.href ? (
-            <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
-              {Inner}
-            </a>
-          ) : (
-            <div key={c.label}>{Inner}</div>
-          );
-        })}
-      </div>
-
-      <form
-        onSubmit={submit}
-        className="space-y-5 rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur md:p-8"
-      >
-        {sent ? (
-          <div className="py-16 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-white/10">
-              <Check className="h-6 w-6 text-white" />
+            <div className="min-w-0">
+              <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{c.label}</div>
+              <div className="truncate text-sm font-medium text-white">{c.value}</div>
             </div>
-            <h3 className="mt-6 font-display text-2xl text-white" style={serifStyle}>Message received.</h3>
-            <p className="mt-2 text-white/60">I&rsquo;ll get back to you within 24 hours.</p>
           </div>
+        );
+        return c.href ? (
+          <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+            {Inner}
+          </a>
         ) : (
-          <>
-            <div className="grid gap-5 md:grid-cols-2">
-              <label className="block">
-                <div className="mb-1.5 text-xs uppercase tracking-[0.15em] text-white/50">Your name</div>
-                <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputCls} placeholder="Jane Doe" />
-              </label>
-              <label className="block">
-                <div className="mb-1.5 text-xs uppercase tracking-[0.15em] text-white/50">Email</div>
-                <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputCls} placeholder="jane@studio.com" />
-              </label>
-            </div>
-            <label className="block">
-              <div className="mb-1.5 text-xs uppercase tracking-[0.15em] text-white/50">Project type</div>
-              <select value={form.project} onChange={(e) => setForm({ ...form, project: e.target.value })} className={inputCls} required>
-                <option value="">Choose one…</option>
-                <option>Brand Commercial</option>
-                <option>Social Media Ad</option>
-                <option>Corporate / Founders</option>
-                <option>Product Video</option>
-                <option>YouTube Editing</option>
-                <option>Motion Graphics</option>
-              </select>
-            </label>
-            <label className="block">
-              <div className="mb-1.5 text-xs uppercase tracking-[0.15em] text-white/50">Tell me about your project</div>
-              <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${inputCls} resize-none`} placeholder="Timelines, deliverables, references…" />
-            </label>
-            <button
-              type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white py-3.5 text-sm font-semibold text-black transition hover:bg-white/90"
+          <div key={c.label}>{Inner}</div>
+        );
+      })}
+    </div>
+  );
+}
+
+function BrandMarquee() {
+  const items = [...brands, ...brands];
+  return (
+    <div className="mt-20">
+      <div className="flex items-center justify-center gap-4">
+        <span className="h-px w-12 bg-white/30" />
+        <span className="text-[0.7rem] uppercase tracking-[0.4em] text-white/60">Brands I&rsquo;ve Worked With</span>
+        <span className="h-px w-12 bg-white/30" />
+      </div>
+      <div className="relative mt-8 overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent" />
+        <div className="flex w-max animate-marquee">
+          {items.map((name, i) => (
+            <div
+              key={`${name}-${i}`}
+              className="mx-3 flex h-14 items-center rounded-full border border-white/10 bg-white/[0.03] px-8 text-sm font-medium tracking-wide text-white/80 backdrop-blur"
             >
-              Send message <Send className="h-4 w-4" />
-            </button>
-          </>
-        )}
-      </form>
+              {name}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
