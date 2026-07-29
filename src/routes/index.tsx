@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Lightfall from "@/components/Lightfall";
 import LightRays from "@/components/LightRays";
+import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 import ctaBg from "@/assets/cta-bg.jpg";
@@ -365,6 +366,28 @@ function HomePage() {
 
     </div>
 
+  );
+}
+
+function ToolRow({
+  name,
+  desc,
+  icon: Icon,
+}: {
+  name: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <li className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur transition hover:border-white/25">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/[0.05] text-white">
+        <Icon className="h-4 w-4" />
+      </span>
+      <span className="flex-1">
+        <span className="block text-sm font-semibold text-white">{name}</span>
+        <span className="block text-xs text-white/50">{desc}</span>
+      </span>
+    </li>
   );
 }
 
