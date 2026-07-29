@@ -393,7 +393,15 @@ class Media {
     scroll: { current: number; last: number },
     direction: "left" | "right",
   ) {
+    // eased hover state -> scale-up + shader highlight
+    this.hover += (this.hoverTarget - this.hover) * 0.12;
+    this.program.uniforms.uHover.value = this.hover;
+    const hoverScale = 1 + 0.08 * this.hover;
+    this.plane.scale.x = this.baseScaleX * hoverScale;
+    this.plane.scale.y = this.baseScaleY * hoverScale;
+
     this.plane.position.x = this.x - scroll.current - this.extra;
+
 
     const x = this.plane.position.x;
     const H = this.viewport.width / 2;
