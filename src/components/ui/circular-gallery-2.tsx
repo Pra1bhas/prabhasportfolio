@@ -777,7 +777,9 @@ class App {
 
   destroy() {
     window.cancelAnimationFrame(this.raf);
+    this.container.removeEventListener("mouseleave", this.boundOnPointerLeave);
     window.removeEventListener("resize", this.boundOnResize);
+
     this.container.removeEventListener("mousedown", this.boundOnTouchDown);
     window.removeEventListener("mousemove", this.boundOnTouchMove);
     window.removeEventListener("mouseup", this.boundOnTouchUp);
