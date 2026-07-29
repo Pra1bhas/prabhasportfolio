@@ -168,6 +168,7 @@ class Title {
       (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
     this.mesh.scale.set(localWidth, localHeight, 1);
     this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.06;
+    console.log('TITLE', this.text, width, height, aspect, localWidth, localHeight, this.plane.scale.x, this.plane.scale.y);
     this.mesh.setParent(this.plane);
   }
 }
