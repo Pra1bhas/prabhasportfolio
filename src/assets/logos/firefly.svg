@@ -1,12 +1,30 @@
-<svg width="91" height="80" viewBox="0 0 91 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_906_1839)">
-<path d="M56.9686 0H90.4318V80L56.9686 0Z" fill="#EB1000"/>
-<path d="M33.4632 0H0V80L33.4632 0Z" fill="#EB1000"/>
-<path d="M45.1821 29.4668L66.5199 80.0002H52.5657L46.1982 63.9461H30.6182L45.1821 29.4668Z" fill="#EB1000"/>
-</g>
-<defs>
-<clipPath id="clip0_906_1839">
-<rect width="90.4318" height="80" fill="white"/>
-</clipPath>
-</defs>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #eb1000;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Surfaces">
+    <g id="Corporate_Red" data-name="Corporate Red">
+      <g id="Outline_no_shadow_copy_14" data-name="Outline no shadow copy 14">
+        <rect class="cls-1" width="54" height="54" rx="9.74" ry="9.74"/>
+      </g>
+    </g>
+  </g>
+  <g id="Live_Text" data-name="Live Text">
+    <g id="Fi_with_sparkle" data-name="Fi with sparkle">
+      <g>
+        <path class="cls-2" d="M13.48,14.96h18.09v5.88h-11.21v4.25h9.92v5.88h-9.92v8.77h-6.88V14.96Z"/>
+        <path class="cls-2" d="M34.46,20.43h6.48v19.32h-6.48v-19.32Z"/>
+      </g>
+      <path class="cls-2" d="M38.81,16.86l2.31.52c.91.2,1.54-.88.9-1.56l-1.6-1.73c-.21-.23-.3-.54-.23-.85l.52-2.3c.2-.9-.88-1.53-1.57-.9l-1.74,1.6c-.23.21-.55.29-.85.23l-2.31-.52c-.91-.2-1.54.88-.9,1.56l1.6,1.73c.21.23.3.54.23.85l-.52,2.3c-.2.9.88,1.53,1.57.9l1.74-1.6c.23-.21.55-.29.85-.23Z"/>
+    </g>
+  </g>
 </svg>
