@@ -188,6 +188,7 @@ class Media {
   speed = 0;
   isBefore = false;
   isAfter = false;
+  motion: { reduced: boolean };
 
   constructor({
     geometry,
@@ -204,6 +205,7 @@ class Media {
     textColor,
     borderRadius = 0,
     font,
+    motion,
   }: {
     geometry: Plane;
     gl: OGLRenderingContext;
@@ -219,7 +221,10 @@ class Media {
     textColor: string;
     borderRadius: number;
     font: string;
+    motion: { reduced: boolean };
   }) {
+    this.motion = motion;
+
     this.geometry = geometry;
     this.gl = gl;
     this.image = image;
