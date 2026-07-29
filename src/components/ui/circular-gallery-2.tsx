@@ -630,7 +630,7 @@ class App {
     this.viewport = { width, height };
     // flatten the curve on narrow screens so cards/labels aren't rotated
     // off the edges
-    const bendFactor = Math.min(1, Math.max(0.3, this.screen.width / 900));
+    const bendFactor = Math.min(1, Math.max(0.25, this.screen.width / 1100));
     if (this.medias) {
       this.medias.forEach((media) => {
         media.bend = this.baseBend * bendFactor;
