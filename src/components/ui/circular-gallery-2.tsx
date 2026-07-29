@@ -163,7 +163,7 @@ class Title {
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
     // mesh is parented to the plane, so scale/position are in plane-local units
-    const localHeight = 0.13;
+    const localHeight = 0.5;
     const localWidth =
       (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
     this.mesh.scale.set(localWidth, localHeight, 1);
