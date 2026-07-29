@@ -391,25 +391,6 @@ function ToolRow({
   );
 }
 
-function ToolCard({
-  name,
-  desc,
-  icon: Icon,
-}: {
-  name: string;
-  desc: string;
-  icon: React.ComponentType<{ className?: string }>;
-}) {
-  return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur transition hover:border-white/30">
-      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/[0.05] text-white">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="mt-4 font-display text-sm font-semibold text-white">{name}</div>
-      <div className="text-xs text-white/50">{desc}</div>
-    </div>
-  );
-}
 
 function ContactBlock() {
   const [sent, setSent] = useState(false);
