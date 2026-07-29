@@ -15,14 +15,12 @@ import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 
 const brands = [
-  "Aurora Watches",
-  "Kori Skincare",
-  "Vaayu",
-  "Nova Coffee",
-  "Studio Black",
-  "Foundry Films",
-  "Monarch Media",
-  "Kite & Co",
+  { name: "Abhinav Parkour", logo: abhinavAsset.url },
+  { name: "Bambino", logo: bambinoAsset.url },
+  { name: "D Design Studio", logo: ddesignAsset.url },
+  { name: "Cre8ve Studios", logo: cre8veAsset.url },
+  { name: "Indian Agri Tech", logo: agritechAsset.url },
+  { name: "SAP Jewels LLP", logo: sapAsset.url },
 ];
 
 export const Route = createFileRoute("/")({
