@@ -11,6 +11,8 @@ import {
 import Lightfall from "@/components/Lightfall";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
+import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
+
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 import abhinavAsset from "@/assets/abhinav-parkour.png.asset.json";
