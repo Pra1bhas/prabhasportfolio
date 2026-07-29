@@ -214,7 +214,12 @@ class Media {
   speed = 0;
   isBefore = false;
   isAfter = false;
+  hover = 0;
+  hoverTarget = 0;
+  baseScaleX = 1;
+  baseScaleY = 1;
   motion: { reduced: boolean };
+
 
   constructor({
     geometry,
