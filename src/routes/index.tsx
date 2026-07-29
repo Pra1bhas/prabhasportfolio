@@ -228,7 +228,7 @@ function HomePage() {
       </section>
 
       {/* TOOLKIT */}
-      <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-0 pt-24">
+      <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-24 pt-24">
         <div className="pointer-events-none absolute inset-0 opacity-20">
           <img src={toolkitBg} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black" />
@@ -252,6 +252,7 @@ function HomePage() {
             <OrbitingToolkit className="w-full" />
           </div>
 
+          <BrandMarquee />
         </div>
       </section>
 
