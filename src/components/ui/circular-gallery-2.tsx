@@ -743,9 +743,11 @@ class App {
       this.scroll.ease,
     );
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
+    this.updateHover();
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
     }
+
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update);
