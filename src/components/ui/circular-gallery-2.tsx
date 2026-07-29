@@ -637,15 +637,64 @@ class App {
   }
 
   onTouchMove(e: MouseEvent | TouchEvent) {
+    if ("clientX" in e) this.trackPointer(e as MouseEvent);
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
     const distance = (this.start - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
 
+  trackPointer(e: MouseEvent) {
+    const rect = this.container.getBoundingClientRect();
+    if (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    ) {
+      this.pointer = null;
+      return;
+    }
+    const nx = (e.clientX - rect.left) / rect.width;
+    const ny = (e.clientY - rect.top) / rect.height;
+    this.pointer = {
+      x: (nx - 0.5) * this.viewport.width,
+      y: -(ny - 0.5) * this.viewport.height,
+    };
+  }
+
+  onPointerLeave() {
+    this.pointer = null;
+  }
+
+  updateHover() {
+    if (!this.medias) return;
+    let hoveredIndex = -1;
+    let bestDist = Infinity;
+    if (this.pointer && !this.isDown) {
+      this.medias.forEach((media, i) => {
+        const halfX = media.baseScaleX / 2;
+        const halfY = media.baseScaleY / 2;
+        const dx = this.pointer!.x - media.plane.position.x;
+        const dy = this.pointer!.y - media.plane.position.y;
+        if (Math.abs(dx) <= halfX && Math.abs(dy) <= halfY) {
+          const dist = dx * dx + dy * dy;
+          if (dist < bestDist) {
+            bestDist = dist;
+            hoveredIndex = i;
+          }
+        }
+      });
+    }
+    this.medias.forEach((media, i) => {
+      media.hoverTarget = i === hoveredIndex ? 1 : 0;
+    });
+  }
+
   onTouchUp() {
     this.isDown = false;
   }
+
 
   onResize() {
     this.screen = {
