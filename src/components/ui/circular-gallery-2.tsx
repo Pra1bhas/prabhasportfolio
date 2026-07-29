@@ -422,6 +422,8 @@ class App {
   container: HTMLElement;
   scrollSpeed: number;
   autoScroll: number;
+  reducedAutoScrollFactor: number;
+  motion: { reduced: boolean };
   scroll: {
     ease: number;
     current: number;
@@ -458,6 +460,8 @@ class App {
       scrollSpeed,
       scrollEase,
       autoScroll,
+      reducedMotion,
+      reducedAutoScrollFactor,
     }: {
       items?: GalleryItem[];
       bend: number;
@@ -467,13 +471,18 @@ class App {
       scrollSpeed: number;
       scrollEase: number;
       autoScroll: number;
+      reducedMotion: boolean;
+      reducedAutoScrollFactor: number;
     },
   ) {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.autoScroll = autoScroll;
+    this.reducedAutoScrollFactor = reducedAutoScrollFactor;
+    this.motion = { reduced: reducedMotion };
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(() => {}, 200);
+
 
     autoBind(this);
 
