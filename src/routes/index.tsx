@@ -359,7 +359,9 @@ function HomePage() {
           <ContactBlock />
         </div>
       </section>
+      </div>
     </div>
+
   );
 }
 
