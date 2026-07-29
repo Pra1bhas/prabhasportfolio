@@ -298,6 +298,7 @@ class Media {
         uniform vec2 uPlaneSizes;
         uniform sampler2D tMap;
         uniform float uBorderRadius;
+        uniform float uHover;
         varying vec2 vUv;
 
         float roundedBoxSDF(vec2 p, vec2 b, float r) {
@@ -310,17 +311,31 @@ class Media {
             min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
             min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
           );
+          // subtle parallax zoom on hover
+          vec2 c = vUv - 0.5;
+          c /= (1.0 + 0.06 * uHover);
+          vec2 hUv = c + 0.5;
           vec2 uv = vec2(
-            vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-            vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+            hUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+            hUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
           vec4 color = texture2D(tMap, uv);
-          // black tint to match the dark portfolio theme
-          color.rgb = mix(color.rgb, vec3(0.0), 0.38);
+          // black tint to match the dark portfolio theme, lifted on hover
+          color.rgb = mix(color.rgb, vec3(0.0), 0.38 - 0.26 * uHover);
+          // gentle contrast/lift so the logo pops
+          color.rgb = mix(color.rgb, color.rgb * 1.12 + 0.02, uHover);
 
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
+
+          // premium rim light along the card edge on hover
+          float rim = smoothstep(0.012, 0.0, abs(d)) * uHover;
+          color.rgb += vec3(0.9) * rim * 0.75;
+
+          // soft diagonal sheen sweeping the card
+          float sheen = smoothstep(0.35, 0.0, abs((vUv.x + vUv.y) * 0.5 - 0.5)) * uHover;
+          color.rgb += vec3(0.6) * sheen * 0.08;
 
           gl_FragColor = vec4(color.rgb, color.a * alpha);
         }
@@ -332,9 +347,11 @@ class Media {
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius },
+        uHover: { value: 0 },
       },
       transparent: true,
     });
+
 
     const img = new Image();
     img.crossOrigin = "anonymous";
