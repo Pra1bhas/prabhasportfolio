@@ -11,6 +11,8 @@ import {
 import Lightfall from "@/components/Lightfall";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
+import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
+
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 import abhinavAsset from "@/assets/abhinav-parkour.png.asset.json";
@@ -334,8 +336,12 @@ function ContactBlock() {
   );
 }
 
+const galleryItems: GalleryItem[] = brands.map((b) => ({
+  image: b.logo,
+  text: b.name,
+}));
+
 function BrandMarquee() {
-  const items = [...brands, ...brands];
   return (
     <div className="mt-20">
       <div className="flex items-center justify-center gap-4">
@@ -343,28 +349,16 @@ function BrandMarquee() {
         <span className="vox-text text-[0.7rem] uppercase tracking-[0.4em]">Brands I&rsquo;ve Worked With</span>
         <span className="h-px w-12 bg-white/30" />
       </div>
-      <div className="relative mt-8 overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent" />
-        <div className="flex w-max animate-marquee">
-          {items.map((b, i) => (
-            <div
-              key={`${b.name}-${i}`}
-              className="mx-3 flex h-20 items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-7 backdrop-blur transition hover:border-white/30"
-            >
-              <img
-                src={b.logo}
-                alt={`${b.name} logo`}
-                loading="lazy"
-                className="h-10 w-10 shrink-0 rounded-md object-contain"
-              />
-              <span className="whitespace-nowrap text-sm font-medium tracking-wide text-white/80">
-                {b.name}
-              </span>
-            </div>
-          ))}
-        </div>
+      <div className="relative mt-6 h-[420px] w-full text-white sm:h-[480px]">
+        <CircularGallery
+          items={galleryItems}
+          bend={3}
+          borderRadius={0.06}
+          autoScroll={0.02}
+          style={{ fontSize: "22px", fontWeight: 500 }}
+        />
       </div>
     </div>
   );
 }
+
