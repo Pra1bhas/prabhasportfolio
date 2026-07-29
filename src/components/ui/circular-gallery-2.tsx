@@ -663,6 +663,8 @@ const CircularGallery = ({
   scrollSpeed = 2,
   scrollEase = 0.05,
   autoScroll = 0.02,
+  respectReducedMotion = true,
+  reducedAutoScrollFactor = 0,
   className,
   fontClassName,
   ...props
@@ -679,6 +681,12 @@ const CircularGallery = ({
     const computedFontFamily = computedStyle.fontFamily;
     const computedFont = `${computedFontWeight} ${computedFontSize} ${computedFontFamily}`;
 
+    const mql =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null;
+    const prefersReduced = respectReducedMotion && !!mql?.matches;
+
     const app = new App(containerRef.current, {
       items,
       bend,
@@ -688,10 +696,30 @@ const CircularGallery = ({
       scrollSpeed,
       scrollEase,
       autoScroll,
+      reducedMotion: prefersReduced,
+      reducedAutoScrollFactor,
     });
 
-    return () => app.destroy();
-  }, [items, bend, borderRadius, scrollSpeed, scrollEase, autoScroll, fontClassName]);
+    const onPreferenceChange = (e: MediaQueryListEvent) =>
+      app.setReducedMotion(respectReducedMotion && e.matches);
+    mql?.addEventListener("change", onPreferenceChange);
+
+    return () => {
+      mql?.removeEventListener("change", onPreferenceChange);
+      app.destroy();
+    };
+  }, [
+    items,
+    bend,
+    borderRadius,
+    scrollSpeed,
+    scrollEase,
+    autoScroll,
+    respectReducedMotion,
+    reducedAutoScrollFactor,
+    fontClassName,
+  ]);
+
 
   return (
     <div
