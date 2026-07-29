@@ -158,10 +158,12 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeight = this.plane.scale.y * 0.13;
-    const textWidth = textHeight * aspect;
-    this.mesh.scale.set(textWidth, textHeight, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
+    // mesh is parented to the plane, so scale/position are in plane-local units
+    const localHeight = 0.13;
+    const localWidth =
+      (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
+    this.mesh.scale.set(localWidth, localHeight, 1);
+    this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.06;
     this.mesh.setParent(this.plane);
   }
 }
