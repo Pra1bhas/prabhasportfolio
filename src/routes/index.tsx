@@ -270,27 +270,35 @@ function HomePage() {
             </p>
           </div>
 
-          <div className="mt-14">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px flex-1 bg-white/15" />
-              <div className="text-xs uppercase tracking-[0.25em] text-white/50">Editing &amp; Compositing</div>
-              <div className="h-px flex-1 bg-white/15" />
+          <div className="mt-6">
+            <OrbitingToolkit className="w-full" />
+          </div>
+
+          <div className="mt-10 grid gap-10 md:grid-cols-2">
+            <div>
+              <div className="mb-5 flex items-center gap-3">
+                <div className="text-xs uppercase tracking-[0.25em] text-white/50">Editing &amp; Compositing</div>
+                <div className="h-px flex-1 bg-white/15" />
+              </div>
+              <ul className="space-y-3">
+                {editingTools.map((t) => (
+                  <ToolRow key={t.name} {...t} />
+                ))}
+              </ul>
             </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-              {editingTools.map((t) => <ToolCard key={t.name} {...t} />)}
+            <div>
+              <div className="mb-5 flex items-center gap-3">
+                <div className="text-xs uppercase tracking-[0.25em] text-white/50">AI &amp; Generative</div>
+                <div className="h-px flex-1 bg-white/15" />
+              </div>
+              <ul className="space-y-3">
+                {aiTools.map((t) => (
+                  <ToolRow key={t.name} {...t} />
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="mt-14">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px flex-1 bg-white/15" />
-              <div className="text-xs uppercase tracking-[0.25em] text-white/50">AI &amp; Generative</div>
-              <div className="h-px flex-1 bg-white/15" />
-            </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-              {aiTools.map((t) => <ToolCard key={t.name} {...t} />)}
-            </div>
-          </div>
         </div>
 
         <div className="relative mt-24 border-y border-white/10 bg-black/50 py-16 backdrop-blur">
