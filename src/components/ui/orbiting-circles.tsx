@@ -56,7 +56,7 @@ export default function OrbitingToolkit({ className = "" }: { className?: string
   return (
     <div
       className={`relative flex items-center justify-center overflow-hidden ${className}`}
-      style={{ minHeight: 560 }}
+      style={{ minHeight: 680 }}
     >
       <style>{`
         @keyframes tk-orbit-cw { from { transform: rotate(var(--start)) } to { transform: rotate(calc(var(--start) + 360deg)) } }
