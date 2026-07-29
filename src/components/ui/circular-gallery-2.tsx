@@ -69,13 +69,17 @@ function createTextTexture(
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
-  context.font = font;
+  const sizeMatch = font.match(/(\d+(?:\.\d+)?)px/);
+  const baseSize = sizeMatch ? parseFloat(sizeMatch[1]) : 30;
+  const dpr = 2;
+  const renderFont = font.replace(/(\d+(?:\.\d+)?)px/, `${baseSize * dpr}px`);
+  context.font = renderFont;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const textHeight = Math.ceil(parseInt(font, 10) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
-  context.font = font;
+  const textHeight = Math.ceil(baseSize * dpr * 1.3);
+  canvas.width = textWidth + 20 * dpr;
+  canvas.height = textHeight + 20 * dpr;
+  context.font = renderFont;
   context.fillStyle = color;
   context.textBaseline = "middle";
   context.textAlign = "center";
