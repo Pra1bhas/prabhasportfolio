@@ -294,6 +294,8 @@ class Media {
             vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
           vec4 color = texture2D(tMap, uv);
+          // black tint to match the dark portfolio theme
+          color.rgb = mix(color.rgb, vec3(0.0), 0.38);
 
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           float edgeSmooth = 0.002;
