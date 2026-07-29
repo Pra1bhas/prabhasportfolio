@@ -437,7 +437,7 @@ class Media {
       520,
       Math.max(
         120,
-        Math.min(this.screen.width * 0.6, this.screen.height * 0.62),
+        Math.min(this.screen.width * 0.55, this.screen.height * 0.48),
       ),
     );
     this.plane.scale.y = (this.viewport.height * cardPx) / this.screen.height;
