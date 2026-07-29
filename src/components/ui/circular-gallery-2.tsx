@@ -214,7 +214,12 @@ class Media {
   speed = 0;
   isBefore = false;
   isAfter = false;
+  hover = 0;
+  hoverTarget = 0;
+  baseScaleX = 1;
+  baseScaleY = 1;
   motion: { reduced: boolean };
+
 
   constructor({
     geometry,
@@ -298,6 +303,7 @@ class Media {
         uniform vec2 uPlaneSizes;
         uniform sampler2D tMap;
         uniform float uBorderRadius;
+        uniform float uHover;
         varying vec2 vUv;
 
         float roundedBoxSDF(vec2 p, vec2 b, float r) {
@@ -310,17 +316,31 @@ class Media {
             min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
             min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0)
           );
+          // subtle parallax zoom on hover
+          vec2 c = vUv - 0.5;
+          c /= (1.0 + 0.06 * uHover);
+          vec2 hUv = c + 0.5;
           vec2 uv = vec2(
-            vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
-            vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
+            hUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
+            hUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
           vec4 color = texture2D(tMap, uv);
-          // black tint to match the dark portfolio theme
-          color.rgb = mix(color.rgb, vec3(0.0), 0.38);
+          // black tint to match the dark portfolio theme, lifted on hover
+          color.rgb = mix(color.rgb, vec3(0.0), 0.38 - 0.26 * uHover);
+          // gentle contrast/lift so the logo pops
+          color.rgb = mix(color.rgb, color.rgb * 1.12 + 0.02, uHover);
 
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
+
+          // premium rim light along the card edge on hover
+          float rim = smoothstep(0.012, 0.0, abs(d)) * uHover;
+          color.rgb += vec3(0.9) * rim * 0.75;
+
+          // soft diagonal sheen sweeping the card
+          float sheen = smoothstep(0.35, 0.0, abs((vUv.x + vUv.y) * 0.5 - 0.5)) * uHover;
+          color.rgb += vec3(0.6) * sheen * 0.08;
 
           gl_FragColor = vec4(color.rgb, color.a * alpha);
         }
@@ -332,9 +352,11 @@ class Media {
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
         uBorderRadius: { value: this.borderRadius },
+        uHover: { value: 0 },
       },
       transparent: true,
     });
+
 
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -371,7 +393,15 @@ class Media {
     scroll: { current: number; last: number },
     direction: "left" | "right",
   ) {
+    // eased hover state -> scale-up + shader highlight
+    this.hover += (this.hoverTarget - this.hover) * 0.12;
+    this.program.uniforms.uHover.value = this.hover;
+    const hoverScale = 1 + 0.08 * this.hover;
+    this.plane.scale.x = this.baseScaleX * hoverScale;
+    this.plane.scale.y = this.baseScaleY * hoverScale;
+
     this.plane.position.x = this.x - scroll.current - this.extra;
+
 
     const x = this.plane.position.x;
     const H = this.viewport.width / 2;
@@ -442,10 +472,13 @@ class Media {
     );
     this.plane.scale.y = (this.viewport.height * cardPx) / this.screen.height;
     this.plane.scale.x = (this.viewport.width * cardPx) / this.screen.width;
+    this.baseScaleX = this.plane.scale.x;
+    this.baseScaleY = this.plane.scale.y;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
+
     this.title?.layout();
     // gap scales with the card so spacing stays proportional across breakpoints
     this.padding = this.plane.scale.x * 0.35;
@@ -479,7 +512,10 @@ class App {
   mediasImages!: GalleryItem[];
   medias!: Media[];
   isDown = false;
+  pointer: { x: number; y: number } | null = null;
+  boundOnPointerLeave!: () => void;
   start = 0;
+
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf!: number;
@@ -604,15 +640,64 @@ class App {
   }
 
   onTouchMove(e: MouseEvent | TouchEvent) {
+    if ("clientX" in e) this.trackPointer(e as MouseEvent);
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
     const distance = (this.start - x) * (this.scrollSpeed * 0.025);
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
 
+  trackPointer(e: MouseEvent) {
+    const rect = this.container.getBoundingClientRect();
+    if (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    ) {
+      this.pointer = null;
+      return;
+    }
+    const nx = (e.clientX - rect.left) / rect.width;
+    const ny = (e.clientY - rect.top) / rect.height;
+    this.pointer = {
+      x: (nx - 0.5) * this.viewport.width,
+      y: -(ny - 0.5) * this.viewport.height,
+    };
+  }
+
+  onPointerLeave() {
+    this.pointer = null;
+  }
+
+  updateHover() {
+    if (!this.medias) return;
+    let hoveredIndex = -1;
+    let bestDist = Infinity;
+    if (this.pointer && !this.isDown) {
+      this.medias.forEach((media, i) => {
+        const halfX = media.baseScaleX / 2;
+        const halfY = media.baseScaleY / 2;
+        const dx = this.pointer!.x - media.plane.position.x;
+        const dy = this.pointer!.y - media.plane.position.y;
+        if (Math.abs(dx) <= halfX && Math.abs(dy) <= halfY) {
+          const dist = dx * dx + dy * dy;
+          if (dist < bestDist) {
+            bestDist = dist;
+            hoveredIndex = i;
+          }
+        }
+      });
+    }
+    this.medias.forEach((media, i) => {
+      media.hoverTarget = i === hoveredIndex ? 1 : 0;
+    });
+  }
+
   onTouchUp() {
     this.isDown = false;
   }
+
 
   onResize() {
     this.screen = {
@@ -658,9 +743,11 @@ class App {
       this.scroll.ease,
     );
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
+    this.updateHover();
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
     }
+
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update);
@@ -671,8 +758,11 @@ class App {
     this.boundOnTouchDown = this.onTouchDown;
     this.boundOnTouchMove = this.onTouchMove;
     this.boundOnTouchUp = this.onTouchUp;
+    this.boundOnPointerLeave = this.onPointerLeave;
 
+    this.container.addEventListener("mouseleave", this.boundOnPointerLeave);
     window.addEventListener("resize", this.boundOnResize);
+
     this.container.addEventListener("mousedown", this.boundOnTouchDown);
     window.addEventListener("mousemove", this.boundOnTouchMove);
     window.addEventListener("mouseup", this.boundOnTouchUp);
@@ -687,7 +777,9 @@ class App {
 
   destroy() {
     window.cancelAnimationFrame(this.raf);
+    this.container.removeEventListener("mouseleave", this.boundOnPointerLeave);
     window.removeEventListener("resize", this.boundOnResize);
+
     this.container.removeEventListener("mousedown", this.boundOnTouchDown);
     window.removeEventListener("mousemove", this.boundOnTouchMove);
     window.removeEventListener("mouseup", this.boundOnTouchUp);
