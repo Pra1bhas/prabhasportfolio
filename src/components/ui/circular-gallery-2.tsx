@@ -29,6 +29,11 @@ interface CircularGalleryProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollEase?: number;
   /** Continuous auto scroll speed (0 disables). */
   autoScroll?: number;
+  /** Honour the OS "prefers-reduced-motion" setting. @default true */
+  respectReducedMotion?: boolean;
+  /** Auto-scroll multiplier applied under reduced motion (0 pauses). @default 0 */
+  reducedAutoScrollFactor?: number;
+
   fontClassName?: string;
 }
 
@@ -188,6 +193,7 @@ class Media {
   speed = 0;
   isBefore = false;
   isAfter = false;
+  motion: { reduced: boolean };
 
   constructor({
     geometry,
@@ -204,6 +210,7 @@ class Media {
     textColor,
     borderRadius = 0,
     font,
+    motion,
   }: {
     geometry: Plane;
     gl: OGLRenderingContext;
@@ -219,7 +226,10 @@ class Media {
     textColor: string;
     borderRadius: number;
     font: string;
+    motion: { reduced: boolean };
   }) {
+    this.motion = motion;
+
     this.geometry = geometry;
     this.gl = gl;
     this.image = image;
@@ -362,8 +372,14 @@ class Media {
     }
 
     this.speed = scroll.current - scroll.last;
-    this.program.uniforms.uTime.value += 0.04;
-    this.program.uniforms.uSpeed.value = this.speed;
+    // Reduced motion: freeze the ripple/wobble shader animation.
+    if (!this.motion.reduced) {
+      this.program.uniforms.uTime.value += 0.04;
+      this.program.uniforms.uSpeed.value = this.speed;
+    } else {
+      this.program.uniforms.uSpeed.value = 0;
+    }
+
 
     const planeOffset = this.plane.scale.x / 2;
     const viewportOffset = this.viewport.width / 2;
@@ -411,6 +427,8 @@ class App {
   container: HTMLElement;
   scrollSpeed: number;
   autoScroll: number;
+  reducedAutoScrollFactor: number;
+  motion: { reduced: boolean };
   scroll: {
     ease: number;
     current: number;
@@ -447,6 +465,8 @@ class App {
       scrollSpeed,
       scrollEase,
       autoScroll,
+      reducedMotion,
+      reducedAutoScrollFactor,
     }: {
       items?: GalleryItem[];
       bend: number;
@@ -456,13 +476,18 @@ class App {
       scrollSpeed: number;
       scrollEase: number;
       autoScroll: number;
+      reducedMotion: boolean;
+      reducedAutoScrollFactor: number;
     },
   ) {
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.autoScroll = autoScroll;
+    this.reducedAutoScrollFactor = reducedAutoScrollFactor;
+    this.motion = { reduced: reducedMotion };
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
     this.onCheckDebounce = debounce(() => {}, 200);
+
 
     autoBind(this);
 
@@ -529,7 +554,9 @@ class App {
         textColor,
         borderRadius,
         font,
+        motion: this.motion,
       });
+
     });
   }
 
@@ -570,10 +597,18 @@ class App {
     }
   }
 
+  setReducedMotion(reduced: boolean) {
+    this.motion.reduced = reduced;
+  }
+
   update() {
-    if (this.autoScroll && !this.isDown) {
-      this.scroll.target += this.autoScroll;
+    const speed = this.motion.reduced
+      ? this.autoScroll * this.reducedAutoScrollFactor
+      : this.autoScroll;
+    if (speed && !this.isDown) {
+      this.scroll.target += speed;
     }
+
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
@@ -633,6 +668,8 @@ const CircularGallery = ({
   scrollSpeed = 2,
   scrollEase = 0.05,
   autoScroll = 0.02,
+  respectReducedMotion = true,
+  reducedAutoScrollFactor = 0,
   className,
   fontClassName,
   ...props
@@ -649,6 +686,12 @@ const CircularGallery = ({
     const computedFontFamily = computedStyle.fontFamily;
     const computedFont = `${computedFontWeight} ${computedFontSize} ${computedFontFamily}`;
 
+    const mql =
+      typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-reduced-motion: reduce)")
+        : null;
+    const prefersReduced = respectReducedMotion && !!mql?.matches;
+
     const app = new App(containerRef.current, {
       items,
       bend,
@@ -658,10 +701,30 @@ const CircularGallery = ({
       scrollSpeed,
       scrollEase,
       autoScroll,
+      reducedMotion: prefersReduced,
+      reducedAutoScrollFactor,
     });
 
-    return () => app.destroy();
-  }, [items, bend, borderRadius, scrollSpeed, scrollEase, autoScroll, fontClassName]);
+    const onPreferenceChange = (e: MediaQueryListEvent) =>
+      app.setReducedMotion(respectReducedMotion && e.matches);
+    mql?.addEventListener("change", onPreferenceChange);
+
+    return () => {
+      mql?.removeEventListener("change", onPreferenceChange);
+      app.destroy();
+    };
+  }, [
+    items,
+    bend,
+    borderRadius,
+    scrollSpeed,
+    scrollEase,
+    autoScroll,
+    respectReducedMotion,
+    reducedAutoScrollFactor,
+    fontClassName,
+  ]);
+
 
   return (
     <div
