@@ -18,7 +18,6 @@ import toolkitBg from "@/assets/toolkit-bg.jpg";
 import abhinavAsset from "@/assets/abhinav-parkour-sq.png.asset.json";
 import bambinoAsset from "@/assets/bambino-sq.png.asset.json";
 import ddesignAsset from "@/assets/ddesign-studio-sq.png.asset.json";
-import cre8veAsset from "@/assets/cre8ve-studios-sq.png.asset.json";
 import agritechAsset from "@/assets/indian-agritech-sq.png.asset.json";
 import sapAsset from "@/assets/sap-jewels-sq.png.asset.json";
 
@@ -26,7 +25,6 @@ const brands = [
   { name: "Abhinav Parkour", logo: abhinavAsset.url },
   { name: "Bambino", logo: bambinoAsset.url },
   { name: "D Design Studio", logo: ddesignAsset.url },
-  { name: "Cre8ve Studios", logo: cre8veAsset.url },
   { name: "Indian Agri Tech", logo: agritechAsset.url },
   { name: "SAP Jewels LLP", logo: sapAsset.url },
 ];
