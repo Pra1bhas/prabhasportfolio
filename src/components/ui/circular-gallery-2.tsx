@@ -464,10 +464,13 @@ class Media {
     );
     this.plane.scale.y = (this.viewport.height * cardPx) / this.screen.height;
     this.plane.scale.x = (this.viewport.width * cardPx) / this.screen.width;
+    this.baseScaleX = this.plane.scale.x;
+    this.baseScaleY = this.plane.scale.y;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
+
     this.title?.layout();
     // gap scales with the card so spacing stays proportional across breakpoints
     this.padding = this.plane.scale.x * 0.35;
