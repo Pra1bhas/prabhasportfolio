@@ -425,6 +425,7 @@ class Media {
       this.plane.scale.x,
       this.plane.scale.y,
     ];
+    console.log('RESIZE', this.plane.scale.x, this.plane.scale.y, this.viewport.width, this.viewport.height, this.screen.width, this.screen.height);
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
