@@ -101,6 +101,8 @@ class Title {
   textColor: string;
   font: string;
   mesh!: Mesh;
+  aspect = 1;
+
 
   constructor({
     gl,
@@ -161,16 +163,29 @@ class Title {
       transparent: true,
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
-    const aspect = width / height;
-    // mesh is parented to the plane, so scale/position are in plane-local units
-    const localHeight = 0.55;
-    const localWidth =
-      (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
+    this.aspect = width / height;
+    this.mesh.setParent(this.plane);
+    this.layout();
+  }
+
+  // recomputed whenever the parent plane is resized so labels stay legible
+  // and never wider than their card on small screens
+  layout() {
+    const aspect = this.aspect || 1;
+    const planeAspect = this.plane.scale.x / this.plane.scale.y;
+    let localHeight = 0.16;
+    let localWidth = (localHeight * aspect) / planeAspect;
+    const maxWidth = 0.9;
+    if (localWidth > maxWidth) {
+      const k = maxWidth / localWidth;
+      localWidth = maxWidth;
+      localHeight *= k;
+    }
     this.mesh.scale.set(localWidth, localHeight, 1);
     this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.04;
-    this.mesh.setParent(this.plane);
   }
 }
+
 
 class Media {
   gl: OGLRenderingContext;
@@ -416,23 +431,34 @@ class Media {
     if (screen) this.screen = screen;
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y =
-      (this.viewport.height * (700 * this.scale)) / this.screen.height;
-    this.plane.scale.x =
-      (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    // square card sized in px, clamped so it never crops on small screens
+    // (leave vertical room for the label underneath)
+    const cardPx = Math.min(
+      520,
+      Math.max(
+        120,
+        Math.min(this.screen.width * 0.55, this.screen.height * 0.48),
+      ),
+    );
+    this.plane.scale.y = (this.viewport.height * cardPx) / this.screen.height;
+    this.plane.scale.x = (this.viewport.width * cardPx) / this.screen.width;
     this.program.uniforms.uPlaneSizes.value = [
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    this.padding = 2;
+    this.title?.layout();
+    // gap scales with the card so spacing stays proportional across breakpoints
+    this.padding = this.plane.scale.x * 0.35;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
   }
+
 }
 
 class App {
   container: HTMLElement;
+  baseBend = 3;
   scrollSpeed: number;
   autoScroll: number;
   reducedAutoScrollFactor: number;
@@ -505,6 +531,8 @@ class App {
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius, font);
+    // re-run once medias exist so responsive bend/sizing apply on first paint
+    this.onResize();
     this.update();
     this.addEventListeners();
   }
@@ -544,6 +572,7 @@ class App {
     borderRadius: number,
     font: string,
   ) {
+    this.baseBend = bend;
     const galleryItems = items && items.length > 0 ? items : [];
     this.mediasImages = [...galleryItems, ...galleryItems];
     this.medias = this.mediasImages.map((data, index) => {
@@ -590,6 +619,7 @@ class App {
       width: this.container.clientWidth,
       height: this.container.clientHeight,
     };
+    if (!this.screen.width || !this.screen.height) return;
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({
       aspect: this.screen.width / this.screen.height,
@@ -598,12 +628,17 @@ class App {
     const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
     const width = height * this.camera.aspect;
     this.viewport = { width, height };
+    // flatten the curve on narrow screens so cards/labels aren't rotated
+    // off the edges
+    const bendFactor = Math.min(1, Math.max(0.25, this.screen.width / 1100));
     if (this.medias) {
-      this.medias.forEach((media) =>
-        media.onResize({ screen: this.screen, viewport: this.viewport }),
-      );
+      this.medias.forEach((media) => {
+        media.bend = this.baseBend * bendFactor;
+        media.onResize({ screen: this.screen, viewport: this.viewport });
+      });
     }
   }
+
 
   setReducedMotion(reduced: boolean) {
     this.motion.reduced = reduced;

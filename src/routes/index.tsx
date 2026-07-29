@@ -343,13 +343,15 @@ const galleryItems: GalleryItem[] = brands.map((b) => ({
 
 function BrandMarquee() {
   return (
-    <div className="mt-20">
-      <div className="flex items-center justify-center gap-4">
-        <span className="h-px w-12 bg-white/30" />
-        <span className="vox-text text-lg font-semibold uppercase tracking-[0.35em] sm:text-2xl">Brands I&rsquo;ve Worked With</span>
-        <span className="h-px w-12 bg-white/30" />
+    <div className="mt-16 sm:mt-20">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-center justify-center gap-3 text-center sm:flex sm:gap-4">
+        <span className="hidden h-px w-12 shrink-0 bg-white/30 sm:block" />
+        <span className="vox-text text-sm font-semibold uppercase tracking-[0.25em] sm:text-2xl sm:tracking-[0.35em]">
+          Brands I&rsquo;ve Worked With
+        </span>
+        <span className="hidden h-px w-12 shrink-0 bg-white/30 sm:block" />
       </div>
-      <div className="relative mt-8 h-[480px] w-full text-white sm:h-[560px]">
+      <div className="relative mt-6 h-[300px] w-full overflow-hidden text-white sm:mt-8 sm:h-[460px] lg:h-[560px]">
         <CircularGallery
           items={galleryItems}
           bend={2}
@@ -358,6 +360,7 @@ function BrandMarquee() {
           style={{ fontSize: "30px", fontWeight: 600 }}
         />
       </div>
+
     </div>
   );
 }
