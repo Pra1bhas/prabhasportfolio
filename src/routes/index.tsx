@@ -13,6 +13,12 @@ import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
+import abhinavAsset from "@/assets/abhinav-parkour.png.asset.json";
+import bambinoAsset from "@/assets/bambino.png.asset.json";
+import ddesignAsset from "@/assets/ddesign-studio.png.asset.json";
+import cre8veAsset from "@/assets/cre8ve-studios.png.asset.json";
+import agritechAsset from "@/assets/indian-agritech.png.asset.json";
+import sapAsset from "@/assets/sap-jewels.png.asset.json";
 
 const brands = [
   { name: "Abhinav Parkour", logo: abhinavAsset.url },
