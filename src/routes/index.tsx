@@ -275,56 +275,6 @@ function HomePage() {
             <OrbitingToolkit className="w-full" />
           </div>
 
-          <div className="mt-10 grid gap-10 md:grid-cols-2">
-            <div>
-              <div className="mb-5 flex items-center gap-3">
-                <div className="text-xs uppercase tracking-[0.25em] text-white/50">Editing &amp; Compositing</div>
-                <div className="h-px flex-1 bg-white/15" />
-              </div>
-              <ul className="space-y-3">
-                {editingTools.map((t) => (
-                  <ToolRow key={t.name} {...t} />
-                ))}
-              </ul>
-            </div>
-            <div>
-              <div className="mb-5 flex items-center gap-3">
-                <div className="text-xs uppercase tracking-[0.25em] text-white/50">AI &amp; Generative</div>
-                <div className="h-px flex-1 bg-white/15" />
-              </div>
-              <ul className="space-y-3">
-                {aiTools.map((t) => (
-                  <ToolRow key={t.name} {...t} />
-                ))}
-              </ul>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="relative mt-24 border-y border-white/10 bg-black/50 py-16 backdrop-blur">
-          <div className="mx-auto mb-8 max-w-6xl px-6">
-            <div className="text-[0.7rem] uppercase tracking-[0.4em] text-white/60">Trusted by</div>
-            <h3 className="mt-2 font-display text-2xl text-white md:text-4xl" style={serifStyle}>
-              Brands I&apos;ve worked with
-            </h3>
-          </div>
-          <div className="relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-black to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-black to-transparent" />
-            <div className="flex w-max animate-marquee gap-5">
-              {[...brands, ...brands].map((b, i) => (
-                <div
-                  key={`${b}-${i}`}
-                  className="flex h-24 w-52 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur"
-                >
-                  <div className="font-display text-xl tracking-[0.25em] text-white/60" style={serifStyle}>
-                    {b}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
