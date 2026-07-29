@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Lightfall from "@/components/Lightfall";
 import LightRays from "@/components/LightRays";
+import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 import ctaBg from "@/assets/cta-bg.jpg";
@@ -270,27 +271,35 @@ function HomePage() {
             </p>
           </div>
 
-          <div className="mt-14">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px flex-1 bg-white/15" />
-              <div className="text-xs uppercase tracking-[0.25em] text-white/50">Editing &amp; Compositing</div>
-              <div className="h-px flex-1 bg-white/15" />
+          <div className="mt-6">
+            <OrbitingToolkit className="w-full" />
+          </div>
+
+          <div className="mt-10 grid gap-10 md:grid-cols-2">
+            <div>
+              <div className="mb-5 flex items-center gap-3">
+                <div className="text-xs uppercase tracking-[0.25em] text-white/50">Editing &amp; Compositing</div>
+                <div className="h-px flex-1 bg-white/15" />
+              </div>
+              <ul className="space-y-3">
+                {editingTools.map((t) => (
+                  <ToolRow key={t.name} {...t} />
+                ))}
+              </ul>
             </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-              {editingTools.map((t) => <ToolCard key={t.name} {...t} />)}
+            <div>
+              <div className="mb-5 flex items-center gap-3">
+                <div className="text-xs uppercase tracking-[0.25em] text-white/50">AI &amp; Generative</div>
+                <div className="h-px flex-1 bg-white/15" />
+              </div>
+              <ul className="space-y-3">
+                {aiTools.map((t) => (
+                  <ToolRow key={t.name} {...t} />
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="mt-14">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px flex-1 bg-white/15" />
-              <div className="text-xs uppercase tracking-[0.25em] text-white/50">AI &amp; Generative</div>
-              <div className="h-px flex-1 bg-white/15" />
-            </div>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-              {aiTools.map((t) => <ToolCard key={t.name} {...t} />)}
-            </div>
-          </div>
         </div>
 
         <div className="relative mt-24 border-y border-white/10 bg-black/50 py-16 backdrop-blur">
@@ -360,7 +369,7 @@ function HomePage() {
   );
 }
 
-function ToolCard({
+function ToolRow({
   name,
   desc,
   icon: Icon,
@@ -370,15 +379,18 @@ function ToolCard({
   icon: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur transition hover:border-white/30">
-      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/[0.05] text-white">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="mt-4 font-display text-sm font-semibold text-white">{name}</div>
-      <div className="text-xs text-white/50">{desc}</div>
-    </div>
+    <li className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur transition hover:border-white/25">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/[0.05] text-white">
+        <Icon className="h-4 w-4" />
+      </span>
+      <span className="flex-1">
+        <span className="block text-sm font-semibold text-white">{name}</span>
+        <span className="block text-xs text-white/50">{desc}</span>
+      </span>
+    </li>
   );
 }
+
 
 function ContactBlock() {
   const [sent, setSent] = useState(false);
