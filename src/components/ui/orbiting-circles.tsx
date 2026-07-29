@@ -65,8 +65,8 @@ export default function OrbitingToolkit({ className = "" }: { className?: string
       <style>{`
         @keyframes tk-orbit-cw { from { transform: rotate(var(--start)) } to { transform: rotate(calc(var(--start) + 360deg)) } }
         @keyframes tk-orbit-ccw { from { transform: rotate(var(--start)) } to { transform: rotate(calc(var(--start) - 360deg)) } }
-        @keyframes tk-counter-cw { from { transform: rotate(0deg) } to { transform: rotate(-360deg) } }
-        @keyframes tk-counter-ccw { from { transform: rotate(0deg) } to { transform: rotate(360deg) } }
+        @keyframes tk-counter-cw { from { transform: rotate(calc(-1 * var(--start))) } to { transform: rotate(calc(-1 * var(--start) - 360deg)) } }
+        @keyframes tk-counter-ccw { from { transform: rotate(calc(-1 * var(--start))) } to { transform: rotate(calc(-1 * var(--start) + 360deg)) } }
       `}</style>
 
       {/* Center particle globe */}
@@ -100,6 +100,7 @@ export default function OrbitingToolkit({ className = "" }: { className?: string
                   <div
                     className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2"
                     style={{
+                      ["--start" as string]: `${ic.angle}deg`,
                       animation: `${isCW ? "tk-counter-cw" : "tk-counter-ccw"} ${orbit.duration}s linear infinite`,
                     }}
                   >
