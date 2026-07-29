@@ -163,12 +163,11 @@ class Title {
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
     // mesh is parented to the plane, so scale/position are in plane-local units
-    const localHeight = 0.5;
+    const localHeight = 0.55;
     const localWidth =
       (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
     this.mesh.scale.set(localWidth, localHeight, 1);
-    this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.06;
-    console.log('TITLE', this.text, width, height, aspect, localWidth, localHeight, this.plane.scale.x, this.plane.scale.y);
+    this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.04;
     this.mesh.setParent(this.plane);
   }
 }
@@ -425,7 +424,6 @@ class Media {
       this.plane.scale.x,
       this.plane.scale.y,
     ];
-    console.log('RESIZE', this.plane.scale.x, this.plane.scale.y, this.viewport.width, this.viewport.height, this.screen.width, this.screen.height);
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
     this.widthTotal = this.width * this.length;
