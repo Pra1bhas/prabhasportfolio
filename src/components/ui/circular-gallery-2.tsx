@@ -69,13 +69,17 @@ function createTextTexture(
 ) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d")!;
-  context.font = font;
+  const sizeMatch = font.match(/(\d+(?:\.\d+)?)px/);
+  const baseSize = sizeMatch ? parseFloat(sizeMatch[1]) : 30;
+  const dpr = 2;
+  const renderFont = font.replace(/(\d+(?:\.\d+)?)px/, `${baseSize * dpr}px`);
+  context.font = renderFont;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const textHeight = Math.ceil(parseInt(font, 10) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
-  context.font = font;
+  const textHeight = Math.ceil(baseSize * dpr * 1.3);
+  canvas.width = textWidth + 20 * dpr;
+  canvas.height = textHeight + 20 * dpr;
+  context.font = renderFont;
   context.fillStyle = color;
   context.textBaseline = "middle";
   context.textAlign = "center";
@@ -158,10 +162,12 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeight = this.plane.scale.y * 0.15;
-    const textWidth = textHeight * aspect;
-    this.mesh.scale.set(textWidth, textHeight, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeight * 0.5 - 0.05;
+    // mesh is parented to the plane, so scale/position are in plane-local units
+    const localHeight = 0.55;
+    const localWidth =
+      (localHeight * aspect * this.plane.scale.y) / this.plane.scale.x;
+    this.mesh.scale.set(localWidth, localHeight, 1);
+    this.mesh.position.y = -0.5 - localHeight * 0.5 - 0.04;
     this.mesh.setParent(this.plane);
   }
 }
@@ -294,6 +300,8 @@ class Media {
             vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
           );
           vec4 color = texture2D(tMap, uv);
+          // black tint to match the dark portfolio theme
+          color.rgb = mix(color.rgb, vec3(0.0), 0.38);
 
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           float edgeSmooth = 0.002;
@@ -409,7 +417,7 @@ class Media {
     if (viewport) this.viewport = viewport;
     this.scale = this.screen.height / 1500;
     this.plane.scale.y =
-      (this.viewport.height * (900 * this.scale)) / this.screen.height;
+      (this.viewport.height * (700 * this.scale)) / this.screen.height;
     this.plane.scale.x =
       (this.viewport.width * (700 * this.scale)) / this.screen.width;
     this.program.uniforms.uPlaneSizes.value = [

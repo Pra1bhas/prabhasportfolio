@@ -15,12 +15,12 @@ import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gall
 
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
-import abhinavAsset from "@/assets/abhinav-parkour.png.asset.json";
-import bambinoAsset from "@/assets/bambino.png.asset.json";
-import ddesignAsset from "@/assets/ddesign-studio.png.asset.json";
-import cre8veAsset from "@/assets/cre8ve-studios.png.asset.json";
-import agritechAsset from "@/assets/indian-agritech.png.asset.json";
-import sapAsset from "@/assets/sap-jewels.png.asset.json";
+import abhinavAsset from "@/assets/abhinav-parkour-sq.png.asset.json";
+import bambinoAsset from "@/assets/bambino-sq.png.asset.json";
+import ddesignAsset from "@/assets/ddesign-studio-sq.png.asset.json";
+import cre8veAsset from "@/assets/cre8ve-studios-sq.png.asset.json";
+import agritechAsset from "@/assets/indian-agritech-sq.png.asset.json";
+import sapAsset from "@/assets/sap-jewels-sq.png.asset.json";
 
 const brands = [
   { name: "Abhinav Parkour", logo: abhinavAsset.url },
@@ -346,16 +346,16 @@ function BrandMarquee() {
     <div className="mt-20">
       <div className="flex items-center justify-center gap-4">
         <span className="h-px w-12 bg-white/30" />
-        <span className="vox-text text-[0.7rem] uppercase tracking-[0.4em]">Brands I&rsquo;ve Worked With</span>
+        <span className="vox-text text-lg font-semibold uppercase tracking-[0.35em] sm:text-2xl">Brands I&rsquo;ve Worked With</span>
         <span className="h-px w-12 bg-white/30" />
       </div>
-      <div className="relative mt-6 h-[420px] w-full text-white sm:h-[480px]">
+      <div className="relative mt-8 h-[480px] w-full text-white sm:h-[560px]">
         <CircularGallery
           items={galleryItems}
-          bend={3}
+          bend={2}
           borderRadius={0.06}
           autoScroll={0.02}
-          style={{ fontSize: "22px", fontWeight: 500 }}
+          style={{ fontSize: "30px", fontWeight: 600 }}
         />
       </div>
     </div>
