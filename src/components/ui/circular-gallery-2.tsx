@@ -173,9 +173,9 @@ class Title {
   layout() {
     const aspect = this.aspect || 1;
     const planeAspect = this.plane.scale.x / this.plane.scale.y;
-    let localHeight = 0.55;
+    let localHeight = 0.16;
     let localWidth = (localHeight * aspect) / planeAspect;
-    const maxWidth = 0.98;
+    const maxWidth = 0.9;
     if (localWidth > maxWidth) {
       const k = maxWidth / localWidth;
       localWidth = maxWidth;
