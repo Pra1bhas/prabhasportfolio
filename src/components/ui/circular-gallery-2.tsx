@@ -592,10 +592,18 @@ class App {
     }
   }
 
+  setReducedMotion(reduced: boolean) {
+    this.motion.reduced = reduced;
+  }
+
   update() {
-    if (this.autoScroll && !this.isDown) {
-      this.scroll.target += this.autoScroll;
+    const speed = this.motion.reduced
+      ? this.autoScroll * this.reducedAutoScrollFactor
+      : this.autoScroll;
+    if (speed && !this.isDown) {
+      this.scroll.target += speed;
     }
+
     this.scroll.current = lerp(
       this.scroll.current,
       this.scroll.target,
