@@ -95,18 +95,22 @@ function HomePage() {
       {/* HOME */}
       <section id="home" className="relative min-h-screen w-full overflow-hidden bg-black">
         <div className="absolute inset-0">
-          <LightRays
-            raysOrigin="top-center"
-            raysColor="#a0a0a0"
-            raysSpeed={1.4}
-            lightSpread={0.6}
-            rayLength={1.6}
-            followMouse
-            mouseInfluence={0.08}
-            noiseAmount={0.08}
-            distortion={0.03}
-            saturation={0}
-            className="absolute inset-0"
+          <Lightfall
+            colors={['#A6C8FF', '#5227FF', '#FF9FFC']}
+            backgroundColor="#000420"
+            speed={1}
+            streakCount={4}
+            streakWidth={1.4}
+            streakLength={1}
+            glow={1}
+            density={1}
+            twinkle={1}
+            zoom={2}
+            backgroundGlow={1}
+            opacity={1}
+            mouseInteraction={false}
+            mouseStrength={1}
+            mouseRadius={0.6}
           />
         </div>
 
