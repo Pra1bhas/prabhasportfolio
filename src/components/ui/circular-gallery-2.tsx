@@ -540,7 +540,9 @@ class App {
         textColor,
         borderRadius,
         font,
+        motion: this.motion,
       });
+
     });
   }
 
