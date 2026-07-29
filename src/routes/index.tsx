@@ -65,26 +65,6 @@ const projects = [
   { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9" },
 ];
 
-const editingTools = [
-  { name: "Premiere Pro", desc: "NLE / timeline", icon: Scissors },
-  { name: "After Effects", desc: "Motion / VFX", icon: Wand2 },
-  { name: "Photoshop", desc: "Stills / cleanup", icon: ImageIcon },
-  { name: "CapCut", desc: "Vertical edits", icon: Smartphone },
-  { name: "Canva", desc: "Thumbnails / graphics", icon: PenTool },
-];
-
-const aiTools = [
-  { name: "Flow AI", desc: "Motion generation", icon: Zap },
-  { name: "Seedance", desc: "AI video assist", icon: Sparkles },
-  { name: "Adobe Firefly", desc: "Generative assets", icon: Flame },
-  { name: "Gemini", desc: "Ideation copilot", icon: Bot },
-  { name: "ChatGPT", desc: "Scripts / copy", icon: MessageSquare },
-];
-
-const brands = [
-  "AURORA", "KORI", "NOVA", "VAAYU", "MERAKI", "ORBIT",
-  "LUMEN", "PRISM", "ATLAS", "HALO", "EMBER", "SAGE",
-];
 
 const serifStyle: React.CSSProperties = {
   fontFamily: '"Cormorant Garamond", "Playfair Display", ui-serif, Georgia, serif',
