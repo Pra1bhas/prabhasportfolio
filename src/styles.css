@@ -145,6 +145,28 @@ html, body {
   animation: marquee-x 40s linear infinite;
 }
 
+/* Vox-style shimmer highlight */
+@keyframes vox-sweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.vox-text {
+  background-image: linear-gradient(
+    100deg,
+    oklch(0.55 0 0) 0%,
+    oklch(0.55 0 0) 35%,
+    oklch(1 0 0) 50%,
+    oklch(0.55 0 0) 65%,
+    oklch(0.55 0 0) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vox-sweep 4s linear infinite;
+  text-shadow: 0 0 24px oklch(1 0 0 / 0.12);
+}
+
 /* Light rays container */
 .light-rays-container {
   width: 100%;

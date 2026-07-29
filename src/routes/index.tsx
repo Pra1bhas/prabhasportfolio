@@ -13,16 +13,20 @@ import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
+import abhinavAsset from "@/assets/abhinav-parkour.png.asset.json";
+import bambinoAsset from "@/assets/bambino.png.asset.json";
+import ddesignAsset from "@/assets/ddesign-studio.png.asset.json";
+import cre8veAsset from "@/assets/cre8ve-studios.png.asset.json";
+import agritechAsset from "@/assets/indian-agritech.png.asset.json";
+import sapAsset from "@/assets/sap-jewels.png.asset.json";
 
 const brands = [
-  "Aurora Watches",
-  "Kori Skincare",
-  "Vaayu",
-  "Nova Coffee",
-  "Studio Black",
-  "Foundry Films",
-  "Monarch Media",
-  "Kite & Co",
+  { name: "Abhinav Parkour", logo: abhinavAsset.url },
+  { name: "Bambino", logo: bambinoAsset.url },
+  { name: "D Design Studio", logo: ddesignAsset.url },
+  { name: "Cre8ve Studios", logo: cre8veAsset.url },
+  { name: "Indian Agri Tech", logo: agritechAsset.url },
+  { name: "SAP Jewels LLP", logo: sapAsset.url },
 ];
 
 export const Route = createFileRoute("/")({
@@ -336,19 +340,27 @@ function BrandMarquee() {
     <div className="mt-20">
       <div className="flex items-center justify-center gap-4">
         <span className="h-px w-12 bg-white/30" />
-        <span className="text-[0.7rem] uppercase tracking-[0.4em] text-white/60">Brands I&rsquo;ve Worked With</span>
+        <span className="vox-text text-[0.7rem] uppercase tracking-[0.4em]">Brands I&rsquo;ve Worked With</span>
         <span className="h-px w-12 bg-white/30" />
       </div>
       <div className="relative mt-8 overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent" />
         <div className="flex w-max animate-marquee">
-          {items.map((name, i) => (
+          {items.map((b, i) => (
             <div
-              key={`${name}-${i}`}
-              className="mx-3 flex h-14 items-center rounded-full border border-white/10 bg-white/[0.03] px-8 text-sm font-medium tracking-wide text-white/80 backdrop-blur"
+              key={`${b.name}-${i}`}
+              className="mx-3 flex h-20 items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-7 backdrop-blur transition hover:border-white/30"
             >
-              {name}
+              <img
+                src={b.logo}
+                alt={`${b.name} logo`}
+                loading="lazy"
+                className="h-10 w-10 shrink-0 rounded-md object-contain"
+              />
+              <span className="whitespace-nowrap text-sm font-medium tracking-wide text-white/80">
+                {b.name}
+              </span>
             </div>
           ))}
         </div>
