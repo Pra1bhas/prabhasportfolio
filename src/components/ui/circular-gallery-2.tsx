@@ -512,7 +512,10 @@ class App {
   mediasImages!: GalleryItem[];
   medias!: Media[];
   isDown = false;
+  pointer: { x: number; y: number } | null = null;
+  boundOnPointerLeave!: () => void;
   start = 0;
+
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf!: number;
