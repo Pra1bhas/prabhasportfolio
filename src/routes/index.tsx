@@ -22,6 +22,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import Lightfall from "@/components/Lightfall";
+import LightRays from "@/components/LightRays";
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
 import ctaBg from "@/assets/cta-bg.jpg";
