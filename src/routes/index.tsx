@@ -261,12 +261,14 @@ function HomePage() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="scroll-mt-20 relative isolate overflow-hidden py-24">
-        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-50">
-          <Meteors number={18} />
+      <section id="contact" className="scroll-mt-20 relative isolate overflow-hidden bg-space-deep py-24">
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <Meteors number={25} />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.75))]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-6">
+        <div className="relative z-10 mx-auto max-w-6xl px-6">
+
           <div className="mx-auto max-w-2xl text-center">
             <div className="text-[0.7rem] uppercase tracking-[0.4em] text-white/60">Contact</div>
             <h2
