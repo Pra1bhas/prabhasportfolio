@@ -9,6 +9,8 @@ import {
   Play,
   Film,
   ArrowLeft,
+  Clock,
+
 } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
@@ -77,21 +79,24 @@ const projects: {
 
 const videoGroups: {
   heading: string;
-  videos: { title: string; vimeoId: string }[];
+  videos: { title: string; vimeoId: string; duration: string; blurb: string }[];
 }[] = [
   {
     heading: "Motion Graphics",
-    videos: [{ title: "Cre8v studios", vimeoId: "1167764587" }],
+    videos: [
+      { title: "Cre8v studios", vimeoId: "1167764587", duration: "1:48", blurb: "Brand motion package" },
+    ],
   },
   {
     heading: "Fanboy Edits",
     videos: [
-      { title: "Fanboy Sambavam", vimeoId: "1162433568" },
-      { title: "Multifandom Edit", vimeoId: "1162432990" },
-      { title: "Breaking Bad", vimeoId: "1162433628" },
+      { title: "Fanboy Sambavam", vimeoId: "1162433568", duration: "1:49", blurb: "High-energy tribute cut" },
+      { title: "Multifandom Edit", vimeoId: "1162432990", duration: "1:02", blurb: "Beat-synced montage" },
+      { title: "Breaking Bad", vimeoId: "1162433628", duration: "0:59", blurb: "Cinematic character edit" },
     ],
   },
 ];
+
 
 
 
@@ -287,7 +292,7 @@ function HomePage() {
                 <span className="h-px flex-1 bg-white/15" />
               </div>
 
-              <div className={`mt-8 grid gap-6 ${group.videos.length > 1 ? "sm:grid-cols-2 lg:grid-cols-3" : ""}`}>
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.videos.map((v) => (
                   <article
                     key={v.vimeoId}
@@ -300,25 +305,37 @@ function HomePage() {
                         src={`https://vumbnail.com/${v.vimeoId}.jpg`}
                         alt={`${v.title} preview`}
                         loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover opacity-70 transition group-hover:opacity-90"
+                        className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-[1.04] group-hover:opacity-95"
                         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
                       />
+                      {/* custom thumbnail overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/40" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-black/60 backdrop-blur transition group-hover:scale-110 group-hover:border-white">
                           <Play className="h-5 w-5 translate-x-[1px] fill-white text-white" />
                         </div>
                       </div>
-                      <div className="absolute right-3 top-3 rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white backdrop-blur">
-                        Watch film
+                      <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/70 backdrop-blur">
+                        {group.heading}
+                      </div>
+                      <div className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/70 px-2.5 py-1 text-[10px] font-medium tabular-nums text-white backdrop-blur">
+                        <Clock className="h-3 w-3 text-white/70" />
+                        {v.duration}
+                      </div>
+                      <div className="absolute bottom-3 left-3 max-w-[65%] text-[11px] text-white/70">
+                        {v.blurb}
                       </div>
                     </div>
                     <div className="p-5">
-                      <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{group.heading}</div>
+                      <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">
+                        {group.heading} · {v.duration}
+                      </div>
                       <h4 className="mt-1.5 font-display text-lg text-white" style={serifStyle}>{v.title}</h4>
                     </div>
                   </article>
                 ))}
               </div>
+
             </div>
           ))}
         </div>
