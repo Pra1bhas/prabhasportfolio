@@ -262,23 +262,10 @@ function HomePage() {
 
       {/* CONTACT */}
       <section id="contact" className="scroll-mt-20 relative isolate overflow-hidden py-24">
-        <div className="pointer-events-none absolute inset-0 -z-10 opacity-50">
-          <Lightfall
-            colors={['#A6C8FF', '#9AA7FF', '#FFFFFF']}
-            backgroundColor="#000000"
-            speed={0.7}
-            streakCount={2}
-            streakWidth={1.1}
-            streakLength={1}
-            glow={0.8}
-            density={0.4}
-            twinkle={0.4}
-            zoom={2}
-            backgroundGlow={0.4}
-            opacity={0.5}
-            mouseInteraction={false}
-          />
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-50">
+          <Meteors number={18} />
         </div>
+
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <div className="text-[0.7rem] uppercase tracking-[0.4em] text-white/60">Contact</div>
