@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Mail,
   Phone,
@@ -7,11 +8,13 @@ import {
   Twitter,
   Play,
   Film,
+  ArrowLeft,
 } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
+
 
 import deskAsset from "@/assets/edit-desk.png.asset.json";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
@@ -57,13 +60,19 @@ const services = [
   { n: "06", title: "Motion Graphics", desc: "Animated logos, kinetic typography, and 2D/3D motion design." },
 ];
 
-const projects = [
+const projects: {
+  title: string;
+  tag: string;
+  accent: string;
+  ratio: string;
+  vimeoId?: string;
+}[] = [
   { title: "Aurora Watches — Launch Film", tag: "Brand Commercial", accent: "teal", ratio: "16/9" },
   { title: "Kori Skincare — Vertical Reel", tag: "Social Ad", accent: "ember", ratio: "9/16" },
   { title: "Vaayu Founders' Story", tag: "Corporate", accent: "teal", ratio: "16/9" },
   { title: "Nova Coffee — Macro Craft", tag: "Product", accent: "ember", ratio: "1/1" },
   { title: "The Retention Cut", tag: "YouTube Edit", accent: "teal", ratio: "16/9" },
-  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9" },
+  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9", vimeoId: "1167764587" },
 ];
 
 
@@ -73,6 +82,8 @@ const serifStyle: React.CSSProperties = {
 };
 
 function HomePage() {
+  const [activeVideo, setActiveVideo] = useState<{ title: string; vimeoId: string } | null>(null);
+
   return (
     <div className="bg-black text-white">
       {/* HOME */}
@@ -207,7 +218,8 @@ function HomePage() {
             {projects.map((p, i) => (
               <article
                 key={p.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30"
+                onClick={() => p.vimeoId && setActiveVideo({ title: p.title, vimeoId: p.vimeoId })}
+                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30 ${p.vimeoId ? "cursor-pointer" : ""}`}
               >
                 <div className="relative" style={{ aspectRatio: p.ratio }}>
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
@@ -285,7 +297,34 @@ function HomePage() {
         </div>
       </section>
 
+      {activeVideo && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur">
+          <div className="flex items-center gap-3 px-5 py-4">
+            <button
+              type="button"
+              onClick={() => setActiveVideo(null)}
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-[0.2em] text-white transition hover:border-white/50 hover:bg-white/[0.12]"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </button>
+            <span className="truncate text-sm text-white/60">{activeVideo.title}</span>
+          </div>
+          <div className="flex flex-1 items-center justify-center px-4 pb-8">
+            <div className="w-full max-w-5xl" style={{ aspectRatio: "16/9" }}>
+              <iframe
+                src={`https://player.vimeo.com/video/${activeVideo.vimeoId}?autoplay=1&muted=0&playsinline=1&title=0&byline=0&portrait=0`}
+                title={activeVideo.title}
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                allowFullScreen
+                className="h-full w-full rounded-xl border border-white/10"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+
 
   );
 }
