@@ -223,6 +223,15 @@ function HomePage() {
               >
                 <div className="relative" style={{ aspectRatio: p.ratio }}>
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
+                  {p.vimeoId && (
+                    <img
+                      src={`https://vumbnail.com/${p.vimeoId}.jpg`}
+                      alt={`${p.title} preview`}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover opacity-70 transition group-hover:opacity-90"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                    />
+                  )}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-black/60 backdrop-blur transition group-hover:scale-110 group-hover:border-white">
                       <Play className="h-5 w-5 translate-x-[1px] fill-white text-white" />
@@ -232,11 +241,17 @@ function HomePage() {
                     <Film className="h-3 w-3 text-white/80" />
                     {String(i + 1).padStart(2, "0")}
                   </div>
+                  {p.vimeoId && (
+                    <div className="absolute right-3 top-3 rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white backdrop-blur">
+                      Watch film
+                    </div>
+                  )}
                 </div>
                 <div className="p-5">
                   <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{p.tag}</div>
                   <h3 className="mt-1.5 font-display text-lg text-white" style={serifStyle}>{p.title}</h3>
                 </div>
+
               </article>
             ))}
           </div>
