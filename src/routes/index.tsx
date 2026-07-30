@@ -77,21 +77,24 @@ const projects: {
 
 const videoGroups: {
   heading: string;
-  videos: { title: string; vimeoId: string }[];
+  videos: { title: string; vimeoId: string; duration: string; blurb: string }[];
 }[] = [
   {
     heading: "Motion Graphics",
-    videos: [{ title: "Cre8v studios", vimeoId: "1167764587" }],
+    videos: [
+      { title: "Cre8v studios", vimeoId: "1167764587", duration: "1:48", blurb: "Brand motion package" },
+    ],
   },
   {
     heading: "Fanboy Edits",
     videos: [
-      { title: "Fanboy Sambavam", vimeoId: "1162433568" },
-      { title: "Multifandom Edit", vimeoId: "1162432990" },
-      { title: "Breaking Bad", vimeoId: "1162433628" },
+      { title: "Fanboy Sambavam", vimeoId: "1162433568", duration: "1:49", blurb: "High-energy tribute cut" },
+      { title: "Multifandom Edit", vimeoId: "1162432990", duration: "1:02", blurb: "Beat-synced montage" },
+      { title: "Breaking Bad", vimeoId: "1162433628", duration: "0:59", blurb: "Cinematic character edit" },
     ],
   },
 ];
+
 
 
 
