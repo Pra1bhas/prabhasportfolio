@@ -218,7 +218,8 @@ function HomePage() {
             {projects.map((p, i) => (
               <article
                 key={p.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30"
+                onClick={() => p.vimeoId && setActiveVideo({ title: p.title, vimeoId: p.vimeoId })}
+                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30 ${p.vimeoId ? "cursor-pointer" : ""}`}
               >
                 <div className="relative" style={{ aspectRatio: p.ratio }}>
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
