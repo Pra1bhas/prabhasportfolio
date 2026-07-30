@@ -147,14 +147,25 @@ html, body {
 
 /* Meteors */
 @keyframes meteor-fall {
-  0% { transform: rotate(215deg) translateX(0); opacity: 1; }
-  70% { opacity: 1; }
-  100% { transform: rotate(215deg) translateX(-1500px); opacity: 0; }
+  0% { transform: rotate(215deg) translate3d(0, 0, 0); opacity: 0; }
+  8% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: rotate(215deg) translate3d(-1800px, 0, 0); opacity: 0; }
 }
 @utility animate-meteor {
   animation: meteor-fall 8s linear infinite;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
+
+/* Cinematic space backdrop */
+@utility bg-space-deep {
+  background:
+    radial-gradient(1200px 600px at 15% 0%, oklch(0.28 0 0 / 0.35), transparent 60%),
+    radial-gradient(900px 500px at 85% 100%, oklch(0.24 0 0 / 0.3), transparent 65%),
+    linear-gradient(180deg, oklch(0.05 0 0), oklch(0.03 0 0) 55%, oklch(0.06 0 0));
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
