@@ -5,28 +5,48 @@ interface MeteorsProps {
   className?: string;
 }
 
-export const Meteors = ({ number = 20, className }: MeteorsProps) => {
+/** Deterministic pseudo-random so SSR and client markup match. */
+function rand(seed: number) {
+  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+export const Meteors = ({ number = 25, className }: MeteorsProps) => {
   const meteors = Array.from({ length: number });
 
   return (
     <>
       {meteors.map((_, idx) => {
-        const left = (idx / number) * 120 - 10;
-        const delay = (idx % 7) * 0.9;
-        const duration = 6 + ((idx * 3) % 7);
+        const left = rand(idx + 1) * 130 - 15;
+        const top = rand(idx + 41) * 60 - 20;
+        const delay = rand(idx + 89) * 9;
+        const duration = 5 + rand(idx + 137) * 7;
+        const tail = 60 + Math.round(rand(idx + 211) * 140);
+        const size = 1 + rand(idx + 307) * 1.4;
+        const opacity = 0.45 + rand(idx + 401) * 0.45;
+
         return (
           <span
             key={idx}
+            aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute top-1/2 left-1/2 h-0.5 w-0.5 rotate-[215deg] animate-meteor rounded-full bg-white/70 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]",
-              "before:absolute before:top-1/2 before:h-px before:w-[50px] before:-translate-y-1/2 before:transform before:bg-gradient-to-r before:from-white/60 before:to-transparent before:content-['']",
+              "pointer-events-none absolute animate-meteor rounded-full bg-white",
+              "before:absolute before:top-1/2 before:right-0 before:h-px before:-translate-y-1/2 before:content-['']",
+              "before:bg-gradient-to-l before:from-white/70 before:to-transparent",
               className,
             )}
             style={{
-              top: "-40px",
+              top: `${top}%`,
               left: `${left}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+              opacity,
+              boxShadow:
+                "0 0 6px 1px rgba(255,255,255,0.85), 0 0 18px 4px rgba(255,255,255,0.28)",
               animationDelay: `${delay}s`,
               animationDuration: `${duration}s`,
+              // tail length per meteor
+              ["--meteor-tail" as string]: `${tail}px`,
             }}
           />
         );
