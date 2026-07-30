@@ -145,7 +145,24 @@ html, body {
   animation: marquee-x 40s linear infinite;
 }
 
+/* Meteors */
+@keyframes meteor-fall {
+  0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: rotate(215deg) translateX(-1500px); opacity: 0; }
+}
+@utility animate-meteor {
+  animation: meteor-fall 8s linear infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-meteor { animation: none; opacity: 0.25; }
+}
+
 /* Vox-style shimmer highlight */
+
 @keyframes vox-sweep {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
