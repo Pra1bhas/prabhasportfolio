@@ -297,7 +297,34 @@ function HomePage() {
         </div>
       </section>
 
+      {activeVideo && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur">
+          <div className="flex items-center gap-3 px-5 py-4">
+            <button
+              type="button"
+              onClick={() => setActiveVideo(null)}
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-4 py-2 text-xs uppercase tracking-[0.2em] text-white transition hover:border-white/50 hover:bg-white/[0.12]"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </button>
+            <span className="truncate text-sm text-white/60">{activeVideo.title}</span>
+          </div>
+          <div className="flex flex-1 items-center justify-center px-4 pb-8">
+            <div className="w-full max-w-5xl" style={{ aspectRatio: "16/9" }}>
+              <iframe
+                src={`https://player.vimeo.com/video/${activeVideo.vimeoId}?autoplay=1&muted=0&playsinline=1&title=0&byline=0&portrait=0`}
+                title={activeVideo.title}
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                allowFullScreen
+                className="h-full w-full rounded-xl border border-white/10"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+
 
   );
 }
