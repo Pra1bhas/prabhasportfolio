@@ -79,22 +79,51 @@ const projects: {
 
 const videoGroups: {
   heading: string;
-  videos: { title: string; vimeoId: string; duration: string; blurb: string }[];
+  videos: { title: string; vimeoId: string; duration: string; blurb: string; thumb: string }[];
 }[] = [
   {
     heading: "Motion Graphics",
     videos: [
-      { title: "Cre8v studios", vimeoId: "1167764587", duration: "1:48", blurb: "Brand motion package" },
+      {
+        title: "Cre8v studios",
+        vimeoId: "1167764587",
+        duration: "1:48",
+        blurb: "Brand motion package",
+        thumb:
+          "https://i.vimeocdn.com/video/2125873148-2f9acf843906d61d1da26d2a9c5d6d5975cd563ac6aa3b6e0562ed1d459616e6-d_1280",
+      },
     ],
   },
   {
     heading: "Fanboy Edits",
     videos: [
-      { title: "Fanboy Sambavam", vimeoId: "1162433568", duration: "1:49", blurb: "High-energy tribute cut" },
-      { title: "Multifandom Edit", vimeoId: "1162432990", duration: "1:02", blurb: "Beat-synced montage" },
-      { title: "Breaking Bad", vimeoId: "1162433628", duration: "0:59", blurb: "Cinematic character edit" },
+      {
+        title: "Fanboy Sambavam",
+        vimeoId: "1162433568",
+        duration: "1:49",
+        blurb: "High-energy tribute cut",
+        thumb:
+          "https://i.vimeocdn.com/video/2118203448-aea104c53743daa472aed3dbf5f9f44ab838f7ed1ad67438862687c569717e57-d_1280",
+      },
+      {
+        title: "Multifandom Edit",
+        vimeoId: "1162432990",
+        duration: "1:02",
+        blurb: "Beat-synced montage",
+        thumb:
+          "https://i.vimeocdn.com/video/2118202689-7131ed2c5cba32b33cab722a5e8f98be6019e5c2effe14150e7d6e3eddbd35cc-d_1280",
+      },
+      {
+        title: "Breaking Bad",
+        vimeoId: "1162433628",
+        duration: "0:59",
+        blurb: "Cinematic character edit",
+        thumb:
+          "https://i.vimeocdn.com/video/2118203529-3da03dd8df0069b2cc0affe12ae7850e052b22ae221f0ecc2077267707360861-d_1280",
+      },
     ],
   },
+
 ];
 
 
