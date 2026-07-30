@@ -8,7 +8,7 @@ import {
   Play,
   Film,
 } from "lucide-react";
-import Lightfall from "@/components/Lightfall";
+import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
