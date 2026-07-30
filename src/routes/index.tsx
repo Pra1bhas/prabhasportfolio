@@ -82,6 +82,8 @@ const serifStyle: React.CSSProperties = {
 };
 
 function HomePage() {
+  const [activeVideo, setActiveVideo] = useState<{ title: string; vimeoId: string } | null>(null);
+
   return (
     <div className="bg-black text-white">
       {/* HOME */}
