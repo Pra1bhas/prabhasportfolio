@@ -274,7 +274,55 @@ function HomePage() {
               </article>
             ))}
           </div>
+
+          {videoGroups.map((group) => (
+            <div key={group.heading} className="mt-20">
+              <div className="flex items-center gap-4">
+                <h3
+                  className="font-display text-white"
+                  style={{ ...serifStyle, fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}
+                >
+                  {group.heading}
+                </h3>
+                <span className="h-px flex-1 bg-white/15" />
+              </div>
+
+              <div className={`mt-8 grid gap-6 ${group.videos.length > 1 ? "sm:grid-cols-2 lg:grid-cols-3" : ""}`}>
+                {group.videos.map((v) => (
+                  <article
+                    key={v.vimeoId}
+                    onClick={() => setActiveVideo(v)}
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30"
+                  >
+                    <div className="relative" style={{ aspectRatio: "16/9" }}>
+                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
+                      <img
+                        src={`https://vumbnail.com/${v.vimeoId}.jpg`}
+                        alt={`${v.title} preview`}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover opacity-70 transition group-hover:opacity-90"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-black/60 backdrop-blur transition group-hover:scale-110 group-hover:border-white">
+                          <Play className="h-5 w-5 translate-x-[1px] fill-white text-white" />
+                        </div>
+                      </div>
+                      <div className="absolute right-3 top-3 rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white backdrop-blur">
+                        Watch film
+                      </div>
+                    </div>
+                    <div className="p-5">
+                      <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{group.heading}</div>
+                      <h4 className="mt-1.5 font-display text-lg text-white" style={serifStyle}>{v.title}</h4>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
+
       </section>
 
       {/* TOOLKIT */}
