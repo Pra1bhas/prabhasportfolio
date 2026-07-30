@@ -66,7 +66,7 @@ const projects = [
   { title: "Vaayu Founders' Story", tag: "Corporate", accent: "teal", ratio: "16/9" },
   { title: "Nova Coffee — Macro Craft", tag: "Product", accent: "ember", ratio: "1/1" },
   { title: "The Retention Cut", tag: "YouTube Edit", accent: "teal", ratio: "16/9" },
-  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9" },
+  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9", vimeoId: "1167764587" },
 ];
 
 
