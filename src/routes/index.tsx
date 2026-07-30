@@ -331,7 +331,9 @@ function HomePage() {
                     <div className="relative" style={{ aspectRatio: "16/9" }}>
                       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
                       <img
-                        src={`https://vumbnail.com/${v.vimeoId}.jpg`}
+                        src={v.thumb}
+                        referrerPolicy="no-referrer"
+
                         alt={`${v.title} preview`}
                         loading="lazy"
                         className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-[1.04] group-hover:opacity-95"
