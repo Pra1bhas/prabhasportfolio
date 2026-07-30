@@ -31,8 +31,8 @@ export const Meteors = ({ number = 25, className }: MeteorsProps) => {
             aria-hidden="true"
             className={cn(
               "pointer-events-none absolute animate-meteor rounded-full bg-white",
-              "before:absolute before:top-1/2 before:right-0 before:h-px before:-translate-y-1/2 before:content-['']",
-              "before:bg-gradient-to-l before:from-white/70 before:to-transparent",
+              "before:absolute before:top-1/2 before:left-full before:h-px before:-translate-y-1/2 before:content-['']",
+              "before:w-[var(--meteor-tail)] before:bg-gradient-to-r before:from-white/70 before:to-transparent",
               className,
             )}
             style={{
