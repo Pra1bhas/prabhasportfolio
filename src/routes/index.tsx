@@ -492,31 +492,40 @@ function ContactBlock() {
   );
 }
 
-const galleryItems: GalleryItem[] = brands.map((b) => ({
-  image: b.logo,
-  text: b.name,
-}));
-
 function BrandMarquee() {
+  const repeated = [...brands, ...brands];
   return (
     <div className="mt-16 sm:mt-20">
       <div className="grid grid-cols-[minmax(0,1fr)] items-center justify-center gap-3 text-center sm:flex sm:gap-4">
         <span className="hidden h-px w-12 shrink-0 bg-white/30 sm:block" />
-        <span className="vox-text text-sm font-semibold uppercase tracking-[0.25em] sm:text-2xl sm:tracking-[0.35em]">
+        <span className="vox-text text-lg font-semibold uppercase tracking-[0.25em] sm:text-2xl sm:tracking-[0.35em]">
           Brands I&rsquo;ve Worked With
         </span>
         <span className="hidden h-px w-12 shrink-0 bg-white/30 sm:block" />
       </div>
-      <div className="relative mt-6 h-[220px] w-full overflow-hidden text-white sm:mt-8 sm:h-[320px] lg:h-[380px]">
-        <CircularGallery
-          items={galleryItems}
-          bend={0}
-          borderRadius={0.06}
-          autoScroll={0.02}
-          style={{ fontSize: "30px", fontWeight: 600 }}
-        />
+      <div className="relative mt-6 w-full overflow-hidden sm:mt-8">
+        <div className="flex w-max animate-marquee gap-4 py-2 sm:gap-6">
+          {repeated.map((b, i) => (
+            <div
+              key={`${b.name}-${i}`}
+              className="group flex shrink-0 flex-col items-center gap-3"
+            >
+              <div className="relative w-36 h-36 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition duration-500 ease-out group-hover:scale-105 group-hover:border-white/40 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] sm:w-44 sm:h-44 lg:w-56 lg:h-56">
+                <img
+                  src={b.logo}
+                  alt={b.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-110"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-black/35 transition duration-500 group-hover:bg-black/10" />
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/60 transition duration-500 group-hover:text-white">
+                {b.name}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-
     </div>
   );
 }
