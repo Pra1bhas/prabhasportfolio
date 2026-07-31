@@ -167,6 +167,7 @@ function HomePage() {
             }}
           >
             PRABHAS PASUPULETI
+            <span className="sr-only"> — Creative Video Editor in Hyderabad, India</span>
           </h1>
           <div className="mt-6 flex items-center gap-4">
             <span className="h-px w-16 bg-white/40 sm:w-24" />
