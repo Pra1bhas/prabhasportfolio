@@ -507,10 +507,10 @@ function BrandMarquee() {
         </span>
         <span className="hidden h-px w-12 shrink-0 bg-white/30 sm:block" />
       </div>
-      <div className="relative mt-6 h-[300px] w-full overflow-hidden text-white sm:mt-8 sm:h-[460px] lg:h-[560px]">
+      <div className="relative mt-6 h-[220px] w-full overflow-hidden text-white sm:mt-8 sm:h-[320px] lg:h-[380px]">
         <CircularGallery
           items={galleryItems}
-          bend={2}
+          bend={0}
           borderRadius={0.06}
           autoScroll={0.02}
           style={{ fontSize: "30px", fontWeight: 600 }}
