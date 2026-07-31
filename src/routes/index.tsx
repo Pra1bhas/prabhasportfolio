@@ -99,20 +99,6 @@ const services = [
   { n: "06", title: "Motion Graphics", desc: "Animated logos, kinetic typography, and 2D/3D motion design." },
 ];
 
-const projects: {
-  title: string;
-  tag: string;
-  accent: string;
-  ratio: string;
-  vimeoId?: string;
-}[] = [
-  { title: "Aurora Watches — Launch Film", tag: "Brand Commercial", accent: "teal", ratio: "16/9" },
-  { title: "Kori Skincare — Vertical Reel", tag: "Social Ad", accent: "ember", ratio: "9/16" },
-  { title: "Vaayu Founders' Story", tag: "Corporate", accent: "teal", ratio: "16/9" },
-  { title: "Nova Coffee — Macro Craft", tag: "Product", accent: "ember", ratio: "1/1" },
-  { title: "The Retention Cut", tag: "YouTube Edit", accent: "teal", ratio: "16/9" },
-  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9" },
-];
 
 const videoGroups: {
   heading: string;
