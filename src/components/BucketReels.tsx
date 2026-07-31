@@ -109,15 +109,20 @@ export function useBucketReels() {
       setReels(list);
       setLoading(false);
 
-      // Build thumbnails sequentially so we don't saturate the network.
-      for (const reel of list) {
-        if (cancelled) return;
-        const poster = await capturePoster(reel.url);
-        if (cancelled) return;
-        if (poster) {
-          setReels((prev) => prev.map((r) => (r.name === reel.name ? { ...r, poster } : r)));
+      // Build thumbnails with limited concurrency so the grid fills quickly.
+      const queue = [...list];
+      const worker = async () => {
+        while (queue.length && !cancelled) {
+          const reel = queue.shift()!;
+          const poster = await capturePoster(reel.url);
+          if (cancelled) return;
+          if (poster) {
+            setReels((prev) => prev.map((r) => (r.name === reel.name ? { ...r, poster } : r)));
+          }
         }
-      }
+      };
+      await Promise.all([worker(), worker(), worker()]);
+
     })();
     return () => {
       cancelled = true;
