@@ -15,7 +15,7 @@ import {
 import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
-import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
+
 
 
 import deskAsset from "@/assets/edit-desk.png.asset.json";
