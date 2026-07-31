@@ -409,6 +409,11 @@ function HomePage() {
 
       </section>
 
+      {/* REELS */}
+      <ReelsSection serifStyle={serifStyle} />
+
+
+
       {/* TOOLKIT */}
       <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-24 pt-24">
         <div className="pointer-events-none absolute inset-0 opacity-20">
