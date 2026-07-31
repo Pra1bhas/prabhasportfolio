@@ -218,12 +218,6 @@ export function ReelCard({
           e.currentTarget.pause();
           e.currentTarget.currentTime = 0;
         }}
-
-        onMouseEnter={(e) => void e.currentTarget.play().catch(() => {})}
-        onMouseLeave={(e) => {
-          e.currentTarget.pause();
-          e.currentTarget.currentTime = 0;
-        }}
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
