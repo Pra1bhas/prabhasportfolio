@@ -16,6 +16,7 @@ import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 import { ReelsSection } from "@/components/ReelsSection";
+import { BucketReelsGrid } from "@/components/BucketReels";
 
 
 
@@ -99,20 +100,6 @@ const services = [
   { n: "06", title: "Motion Graphics", desc: "Animated logos, kinetic typography, and 2D/3D motion design." },
 ];
 
-const projects: {
-  title: string;
-  tag: string;
-  accent: string;
-  ratio: string;
-  vimeoId?: string;
-}[] = [
-  { title: "Aurora Watches — Launch Film", tag: "Brand Commercial", accent: "teal", ratio: "16/9" },
-  { title: "Kori Skincare — Vertical Reel", tag: "Social Ad", accent: "ember", ratio: "9/16" },
-  { title: "Vaayu Founders' Story", tag: "Corporate", accent: "teal", ratio: "16/9" },
-  { title: "Nova Coffee — Macro Craft", tag: "Product", accent: "ember", ratio: "1/1" },
-  { title: "The Retention Cut", tag: "YouTube Edit", accent: "teal", ratio: "16/9" },
-  { title: "Kinetic Identity", tag: "Motion Graphics", accent: "ember", ratio: "16/9" },
-];
 
 const videoGroups: {
   heading: string;
@@ -305,47 +292,10 @@ function HomePage() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((p, i) => (
-              <article
-                key={p.title}
-                onClick={() => p.vimeoId && setActiveVideo({ title: p.title, vimeoId: p.vimeoId })}
-                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:border-white/30 ${p.vimeoId ? "cursor-pointer" : ""}`}
-              >
-                <div className="relative" style={{ aspectRatio: p.ratio }}>
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08),rgba(0,0,0,0.9))]" />
-                  {p.vimeoId && (
-                    <img
-                      src={`https://vumbnail.com/${p.vimeoId}.jpg`}
-                      alt={`${p.title} preview`}
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover opacity-70 transition group-hover:opacity-90"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                    />
-                  )}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 bg-black/60 backdrop-blur transition group-hover:scale-110 group-hover:border-white">
-                      <Play className="h-5 w-5 translate-x-[1px] fill-white text-white" />
-                    </div>
-                  </div>
-                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/60 backdrop-blur">
-                    <Film className="h-3 w-3 text-white/80" />
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  {p.vimeoId && (
-                    <div className="absolute right-3 top-3 rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white backdrop-blur">
-                      Watch film
-                    </div>
-                  )}
-                </div>
-                <div className="p-5">
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">{p.tag}</div>
-                  <h3 className="mt-1.5 font-display text-lg text-white" style={serifStyle}>{p.title}</h3>
-                </div>
-
-              </article>
-            ))}
+          <div className="mt-12">
+            <BucketReelsGrid serifStyle={serifStyle} />
           </div>
+
 
           {videoGroups.map((group) => (
             <div key={group.heading} className="mt-20">
