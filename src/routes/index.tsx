@@ -49,6 +49,41 @@ export const Route = createFileRoute("/")({
         content: "Cinematic brand films, social ads and motion graphics.",
       },
     ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Prabhas Pasupuleti — Creative Video Editor",
+          description:
+            "Cinematic brand films, social ads and motion graphics crafted by Prabhas Pasupuleti.",
+          areaServed: "Worldwide",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Hyderabad",
+            addressCountry: "IN",
+          },
+          founder: {
+            "@type": "Person",
+            name: "Prabhas Pasupuleti",
+            jobTitle: "Creative Video Editor",
+            email: "prabhaspasupuleti@gmail.com",
+            telephone: "+91 8712165611",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Hyderabad",
+              addressCountry: "IN",
+            },
+            sameAs: [
+              "https://www.instagram.com/prabhas.pasupuleti",
+              "https://x.com/prabhasnaidu30",
+            ],
+          },
+        }),
+      },
+    ],
   }),
   component: HomePage,
 });
