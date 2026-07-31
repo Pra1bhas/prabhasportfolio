@@ -51,8 +51,20 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Cinematic brand films, social ads and motion graphics.",
       },
+      { property: "og:url", content: "https://prabhasportfolio.lovable.app/" },
+      { property: "og:image", content: "https://prabhasportfolio.lovable.app/og-cover.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Prabhas Pasupuleti — Creative Video Editor" },
+      { name: "twitter:image", content: "https://prabhasportfolio.lovable.app/og-cover.jpg" },
+      { name: "twitter:title", content: "Prabhas Pasupuleti — Creative Video Editor" },
+      {
+        name: "twitter:description",
+        content: "Cinematic brand films, social ads and motion graphics.",
+      },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://prabhasportfolio.lovable.app/" }],
+
     scripts: [
       {
         type: "application/ld+json",
