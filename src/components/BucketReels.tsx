@@ -196,25 +196,29 @@ export function ReelCard({
       className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black text-left transition hover:border-white/30"
       style={{ aspectRatio: "9/16" }}
     >
-      {reel.poster ? (
+      {reel.poster && (
         <img
           src={reel.poster}
           alt={`${reel.title} thumbnail`}
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
         />
-      ) : (
-        <div className="absolute inset-0 animate-pulse bg-white/[0.04]" />
       )}
       <video
         ref={videoRef}
-        src={reel.url}
+        src={`${reel.url}#t=0.6`}
         poster={reel.poster}
         muted
         loop
         playsInline
-        preload="none"
-        className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-500 group-hover:opacity-100"
+        preload="metadata"
+        className={`absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:opacity-100 ${reel.poster ? "opacity-0" : "opacity-85"}`}
+        onMouseEnter={(e) => void e.currentTarget.play().catch(() => {})}
+        onMouseLeave={(e) => {
+          e.currentTarget.pause();
+          e.currentTarget.currentTime = 0;
+        }}
+
         onMouseEnter={(e) => void e.currentTarget.play().catch(() => {})}
         onMouseLeave={(e) => {
           e.currentTarget.pause();
