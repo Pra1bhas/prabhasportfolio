@@ -464,10 +464,10 @@ class Media {
     // square card sized in px, clamped so it never crops on small screens
     // (leave vertical room for the label underneath)
     const cardPx = Math.min(
-      520,
+      320,
       Math.max(
-        120,
-        Math.min(this.screen.width * 0.55, this.screen.height * 0.48),
+        100,
+        Math.min(this.screen.width * 0.34, this.screen.height * 0.3),
       ),
     );
     this.plane.scale.y = (this.viewport.height * cardPx) / this.screen.height;
