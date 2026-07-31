@@ -287,9 +287,6 @@ function HomePage() {
             >
               Recent <span className="italic text-white/80">edits</span>.
             </h2>
-            <p className="mt-4 text-white/60">
-              A curated look at commercial, social, and long-form projects. Full case studies on request.
-            </p>
           </div>
 
           <div className="mt-12">
