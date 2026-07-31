@@ -15,6 +15,8 @@ import {
 import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
+import { ReelsSection } from "@/components/ReelsSection";
+
 
 
 
@@ -408,6 +410,11 @@ function HomePage() {
         </div>
 
       </section>
+
+      {/* REELS */}
+      <ReelsSection serifStyle={serifStyle} />
+
+
 
       {/* TOOLKIT */}
       <section id="toolkit" className="scroll-mt-20 relative overflow-hidden pb-24 pt-24">
