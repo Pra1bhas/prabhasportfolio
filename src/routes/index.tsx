@@ -15,7 +15,7 @@ import {
 import { Meteors } from "@/components/ui/meteors";
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
-import { ReelsSection } from "@/components/ReelsSection";
+
 import { BucketReelsGrid } from "@/components/BucketReels";
 
 
@@ -359,7 +359,7 @@ function HomePage() {
       </section>
 
       {/* REELS */}
-      <ReelsSection serifStyle={serifStyle} />
+      
 
 
 
