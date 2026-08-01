@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const BUCKET = "insta-reels";
 const VIDEO_EXT = /\.(mp4|mov|webm|m4v)$/i;
+const EXCLUDED_REEL = /den[_ -]?m[_ -]?properties/i;
 
 export type Reel = { name: string; title: string; url: string; poster?: string };
 
