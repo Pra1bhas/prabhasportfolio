@@ -99,7 +99,6 @@ async function checkHttp(host) {
     failures++;
     console.log(`\nHTTP ${host}\n  ${bad("✗")} redirect loop: ${chain.join(" | ")}`);
   } catch (e) {
-    failures++;
     const msg = e.cause?.code || e.name || e.message;
     console.log(`\nHTTP ${host}`);
     if (msg === "ENOTFOUND" && dnsResolved.get(host)) {
