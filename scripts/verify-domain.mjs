@@ -89,7 +89,13 @@ async function checkHttp(host) {
         current = new URL(loc, current).toString();
         continue;
       }
-      const good = res.status === 200;
+      // Canonical host must end up on www with a 200; apex is expected to 301.
+      const expectedHost = `www.${domain}`;
+      const finalHost = new URL(current).host;
+      const good = res.status === 200 && finalHost === expectedHost;
+      if (res.status === 200 && finalHost !== expectedHost) {
+        console.log(`\nHTTP ${host}\n  ${bad("✗")} landed on ${finalHost}, expected ${expectedHost}`);
+      }
       if (!good) failures++;
       console.log(`\nHTTP ${host}`);
       chain.forEach((c) => console.log(`  ${dim(c)}`));

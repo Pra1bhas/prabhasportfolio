@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-// Replace with your custom domain or published URL once one is assigned.
-const BASE_URL = "";
+// Canonical host — must match the vercel.json redirect target.
+const BASE_URL = "https://www.prabhasportfolio.online";
 
 interface SitemapEntry {
   path: string;
