@@ -79,7 +79,9 @@ export function useBucketReels() {
         return;
       }
 
-      const files = (data ?? []).filter((f) => VIDEO_EXT.test(f.name));
+      const files = (data ?? [])
+        .filter((f) => VIDEO_EXT.test(f.name))
+        .filter((f) => !EXCLUDED_REEL.test(f.name));
       if (!files.length) {
         setReels([]);
         setLoading(false);
