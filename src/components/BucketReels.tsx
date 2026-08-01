@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const BUCKET = "insta-reels";
 const VIDEO_EXT = /\.(mp4|mov|webm|m4v)$/i;
+const EXCLUDED_REEL = /den[_ -]?m[_ -]?properties/i;
 
 export type Reel = { name: string; title: string; url: string; poster?: string };
 
@@ -78,7 +79,9 @@ export function useBucketReels() {
         return;
       }
 
-      const files = (data ?? []).filter((f) => VIDEO_EXT.test(f.name));
+      const files = (data ?? [])
+        .filter((f) => VIDEO_EXT.test(f.name))
+        .filter((f) => !EXCLUDED_REEL.test(f.name));
       if (!files.length) {
         setReels([]);
         setLoading(false);
