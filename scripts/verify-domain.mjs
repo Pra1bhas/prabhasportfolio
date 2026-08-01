@@ -27,6 +27,7 @@ const bad = (s) => `\x1b[31m${s}\x1b[0m`;
 const dim = (s) => `\x1b[2m${s}\x1b[0m`;
 
 let failures = 0;
+const dnsResolved = new Map(); // host -> true when public DNS has records
 
 async function doh(resolver, name, type) {
   try {
@@ -63,6 +64,7 @@ async function checkDns(host) {
       continue;
     }
     records.forEach((r) => seen.add(r));
+    dnsResolved.set(host, true);
     console.log(`  ${ok("✓")} ${resolver.name.padEnd(11)} ${records.join(", ")}`);
   }
   if (seen.size > 1) {
@@ -99,7 +101,15 @@ async function checkHttp(host) {
   } catch (e) {
     failures++;
     const msg = e.cause?.code || e.name || e.message;
-    console.log(`\nHTTP ${host}\n  ${bad("✗")} unreachable (${msg}) — DNS missing or TLS not issued`);
+    console.log(`\nHTTP ${host}`);
+    if (msg === "ENOTFOUND" && dnsResolved.get(host)) {
+      // Public DNS has the record but this machine's own resolver does not see it
+      // yet (local cache / restricted network). Not a domain misconfiguration.
+      console.log(`  ${dim("~")} skipped: public DNS is fine, but this machine's resolver can't see ${host} yet`);
+      return;
+    }
+    failures++;
+    console.log(`  ${bad("✗")} unreachable (${msg}) — DNS missing or TLS not issued`);
   }
 }
 
