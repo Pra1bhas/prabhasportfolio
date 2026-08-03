@@ -118,9 +118,121 @@ async function checkHttp(host) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Production-only broken-image checker.
+// Scans the live canonical host for every <img> the page ships (including the
+// bundled assets referenced by the Works "Brands I've Worked With" marquee and
+// the Toolkit "craft stack" icons) and fails when one 404s, returns a non-image
+// content type, or is an empty/placeholder body.
+// ---------------------------------------------------------------------------
+
+const ASSET_RE = /["'`](\/(?:assets|_build|__l5e)\/[^"'`\s]+?\.(?:png|jpe?g|webp|avif|svg|gif|ico))["'`]/gi;
+
+function collectFromHtml(html, base) {
+  const urls = new Set();
+  for (const m of html.matchAll(/<img\b[^>]*?\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+    urls.add(new URL(m[1], base).toString());
+  }
+  for (const m of html.matchAll(/<img\b[^>]*?\bsrcset=["']([^"']+)["']/gi)) {
+    for (const part of m[1].split(","))
+      urls.add(new URL(part.trim().split(/\s+/)[0], base).toString());
+  }
+  return urls;
+}
+
+async function collectFromScripts(html, base) {
+  const urls = new Set();
+  const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((m) =>
+    new URL(m[1], base).toString()
+  );
+  for (const src of scripts.slice(0, 12)) {
+    try {
+      const res = await fetch(src, { signal: AbortSignal.timeout(15000) });
+      if (!res.ok) continue;
+      const code = await res.text();
+      for (const m of code.matchAll(ASSET_RE)) urls.add(new URL(m[1], base).toString());
+    } catch {
+      /* ignore unreadable chunk */
+    }
+  }
+  return urls;
+}
+
+async function checkImage(url) {
+  try {
+    const res = await fetch(url, {
+      headers: { "user-agent": "domain-verify/1.0", "cache-control": "no-cache" },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) return `HTTP ${res.status}`;
+    const type = (res.headers.get("content-type") || "").toLowerCase();
+    const body = await res.arrayBuffer();
+    // A 200 that serves the SPA shell instead of bytes is the classic
+    // "broken placeholder" case on static hosts.
+    if (!type.startsWith("image/")) return `not an image (${type || "no content-type"})`;
+    if (body.byteLength < 64) return `empty body (${body.byteLength} bytes)`;
+    return null;
+  } catch (e) {
+    return e.name === "TimeoutError" ? "timeout" : e.cause?.code || e.message;
+  }
+}
+
+async function checkImages() {
+  const host = `www.${domain}`;
+  const base = `https://${host}/`;
+  console.log(`\nIMG  ${host} ${dim("(brands marquee + craft stack + all page images)")}`);
+
+  let html;
+  try {
+    const res = await fetch(base, {
+      headers: { "user-agent": "domain-verify/1.0", "cache-control": "no-cache" },
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) {
+      failures++;
+      console.log(`  ${bad("✗")} could not load page (HTTP ${res.status})`);
+      return;
+    }
+    html = await res.text();
+  } catch (e) {
+    const msg = e.cause?.code || e.name || e.message;
+    if (msg === "ENOTFOUND" && dnsResolved.get(host)) {
+      console.log(`  ${dim("~")} skipped: this machine's resolver can't see ${host} yet`);
+      return;
+    }
+    failures++;
+    console.log(`  ${bad("✗")} could not load page (${msg})`);
+    return;
+  }
+
+  const urls = new Set([
+    ...collectFromHtml(html, base),
+    ...(await collectFromScripts(html, base)),
+  ]);
+  const targets = [...urls].filter((u) => !u.startsWith("data:"));
+
+  if (targets.length === 0) {
+    failures++;
+    console.log(`  ${bad("✗")} no images found on the page — markup or build output looks wrong`);
+    return;
+  }
+
+  const results = await Promise.all(targets.map(async (u) => [u, await checkImage(u)]));
+  const broken = results.filter(([, err]) => err);
+  for (const [url, err] of broken) {
+    failures++;
+    console.log(`  ${bad("✗")} ${url}\n      ${err}`);
+  }
+  console.log(
+    `  ${broken.length === 0 ? ok("✓") : bad("✗")} ${targets.length - broken.length}/${targets.length} images served correctly`
+  );
+}
+
 console.log(`Verifying ${domain} (apex + www) across public resolvers…`);
 for (const host of hosts) await checkDns(host);
 for (const host of hosts) await checkHttp(host);
+await checkImages();
+
 
 console.log(
   failures === 0
