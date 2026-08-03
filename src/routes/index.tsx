@@ -21,20 +21,20 @@ import { BucketReelsGrid } from "@/components/BucketReels";
 
 
 
-import deskAsset from "@/assets/edit-desk.png.asset.json";
+import deskImg from "@/assets/edit-desk.png";
 import toolkitBg from "@/assets/toolkit-bg.jpg";
-import abhinavAsset from "@/assets/abhinav-parkour-sq.png.asset.json";
-import bambinoAsset from "@/assets/bambino-sq.png.asset.json";
-import ddesignAsset from "@/assets/ddesign-studio-sq.png.asset.json";
-import agritechAsset from "@/assets/indian-agritech-sq.png.asset.json";
-import sapAsset from "@/assets/sap-jewels-sq.png.asset.json";
+import abhinavImg from "@/assets/abhinav-parkour-sq.png";
+import bambinoImg from "@/assets/bambino-sq.png";
+import ddesignImg from "@/assets/ddesign-studio-sq.png";
+import agritechImg from "@/assets/indian-agritech-sq.png";
+import sapImg from "@/assets/sap-jewels-sq.png";
 
 const brands = [
-  { name: "Abhinav Parkour", logo: abhinavAsset.url },
-  { name: "Bambino", logo: bambinoAsset.url },
-  { name: "D Design Studio", logo: ddesignAsset.url },
-  { name: "Indian Agri Tech", logo: agritechAsset.url },
-  { name: "SAP Jewels LLP", logo: sapAsset.url },
+  { name: "Abhinav Parkour", logo: abhinavImg },
+  { name: "Bambino", logo: bambinoImg },
+  { name: "D Design Studio", logo: ddesignImg },
+  { name: "Indian Agri Tech", logo: agritechImg },
+  { name: "SAP Jewels LLP", logo: sapImg },
 ];
 
 export const Route = createFileRoute("/")({
@@ -250,7 +250,7 @@ function HomePage() {
           </div>
 
           <div className="relative">
-            <img src={deskAsset.url} alt="Line-art illustration of a video editing desk" className="w-full h-auto" />
+            <img src={deskImg} alt="Line-art illustration of a video editing desk" className="w-full h-auto" />
           </div>
         </div>
 

@@ -8,9 +8,9 @@ import canva from "@/assets/logos/canva.svg";
 import gemini from "@/assets/logos/gemini.svg";
 import openai from "@/assets/logos/openai.svg";
 import firefly from "@/assets/logos/firefly.svg";
-import capcutAsset from "@/assets/capcut.png.asset.json";
-import flowAsset from "@/assets/flow-ai.png.asset.json";
-import seedanceAsset from "@/assets/seedance.png.asset.json";
+import capcut from "@/assets/capcut.png";
+import flowAi from "@/assets/flow-ai.png";
+import seedance from "@/assets/seedance.png";
 
 type OrbitIcon = {
   alt: string;
@@ -39,7 +39,7 @@ const orbits: Orbit[] = [
     duration: 28,
     icons: [
       { src: canva, alt: "Canva", angle: 0 },
-      { src: capcutAsset.url, alt: "CapCut", angle: 120 },
+      { src: capcut, alt: "CapCut", angle: 120 },
       { src: firefly, alt: "Adobe Firefly", angle: -120 },
     ],
   },
@@ -50,8 +50,8 @@ const orbits: Orbit[] = [
     icons: [
       { src: gemini, alt: "Google Gemini", angle: -45 },
       { src: openai, alt: "ChatGPT", angle: 45 },
-      { src: flowAsset.url, alt: "Flow AI", angle: 135, cover: true },
-      { src: seedanceAsset.url, alt: "Seedance", angle: -135 },
+      { src: flowAi, alt: "Flow AI", angle: 135, cover: true },
+      { src: seedance, alt: "Seedance", angle: -135 },
     ],
   },
 ];
