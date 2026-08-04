@@ -25,16 +25,19 @@ export function SpidermanSwing({ className = "" }: { className?: string }) {
   if (!url) return null;
 
   return (
-    <video
-      src={url}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="auto"
-      aria-hidden="true"
-      className={`pointer-events-none select-none object-contain opacity-80 ${className}`}
-    />
+    <div className={`pointer-events-none select-none ${className}`}>
+      <video
+        src={url}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        className="h-auto w-full object-contain opacity-80"
+        style={{ maxHeight: "55vh" }}
+      />
+    </div>
   );
 }
 

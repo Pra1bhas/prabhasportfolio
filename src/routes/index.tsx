@@ -414,7 +414,9 @@ function HomePage() {
         </div>
 
         {/* Background-less Spider-Man swing — decorative back layer, center top */}
-        <SpidermanSwing className="absolute left-1/2 top-0 -z-[5] w-[140px] -translate-x-1/2 sm:w-[180px] lg:w-[220px]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-[5] flex justify-center px-4 pt-2 sm:pt-4">
+          <SpidermanSwing className="w-[clamp(140px,32vw,260px)]" />
+        </div>
 
 
         <div className="relative z-10 mx-auto max-w-6xl px-6">
