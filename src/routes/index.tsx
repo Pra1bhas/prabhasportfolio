@@ -13,6 +13,8 @@ import {
 
 } from "lucide-react";
 import { Meteors } from "@/components/ui/meteors";
+import { SpidermanSwing } from "@/components/SpidermanSwing";
+
 import LightRays from "@/components/LightRays";
 import OrbitingToolkit from "@/components/ui/orbiting-circles";
 
