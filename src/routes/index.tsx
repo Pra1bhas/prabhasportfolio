@@ -415,7 +415,7 @@ function HomePage() {
 
         {/* Background-less Spider-Man swing — decorative back layer, center top */}
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-[5] flex justify-center px-4 pt-2 sm:pt-4">
-          <SpidermanSwing className="w-[clamp(140px,32vw,260px)]" />
+          <SpidermanSwing />
         </div>
 
 
