@@ -411,6 +411,10 @@ function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.75))]" />
         </div>
 
+        {/* Background-less Spider-Man swing — decorative back layer, center top */}
+        <SpidermanSwing className="absolute left-1/2 top-0 -z-[5] w-[140px] -translate-x-1/2 sm:w-[180px] lg:w-[220px]" />
+
+
         <div className="relative z-10 mx-auto max-w-6xl px-6">
 
           <div className="mx-auto max-w-2xl text-center">
