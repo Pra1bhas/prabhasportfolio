@@ -304,8 +304,19 @@ function HomePage() {
           </div>
 
           <div className="mt-12">
-            <BucketReelsGrid serifStyle={serifStyle} />
+            <BucketReelsGrid
+              serifStyle={serifStyle}
+              vimeoReels={[
+                {
+                  vimeoId: "1217208151",
+                  title: "Paysft Reel",
+                  poster:
+                    "https://i.vimeocdn.com/video/2188834519-4d242cb85b0c86129cd0bade75920ccd3085bf49a2a6eef66da11ba1c1538d19-d_720",
+                },
+              ]}
+            />
           </div>
+
 
 
           {videoGroups.map((group) => (

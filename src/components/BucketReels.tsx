@@ -241,10 +241,108 @@ export function ReelCard({
   );
 }
 
-export function BucketReelsGrid({ serifStyle }: { serifStyle?: React.CSSProperties }) {
+export type VimeoReel = { vimeoId: string; title: string; poster?: string };
+
+function VimeoReelCard({
+  reel,
+  label,
+  onOpen,
+  serifStyle,
+}: {
+  reel: VimeoReel;
+  label: string;
+  onOpen: () => void;
+  serifStyle?: React.CSSProperties;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black text-left transition hover:border-white/30"
+      style={{ aspectRatio: "9/16" }}
+    >
+      {reel.poster && (
+        <img
+          src={reel.poster}
+          referrerPolicy="no-referrer"
+          alt={`${reel.title} thumbnail`}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+        />
+      )}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-black/50 backdrop-blur transition group-hover:scale-110 group-hover:border-white">
+          <Play className="h-4 w-4 translate-x-[1px] fill-white text-white" />
+        </div>
+      </div>
+      <div className="pointer-events-none absolute left-3 top-3 rounded-full border border-white/20 bg-black/60 px-2.5 py-1 text-[10px] uppercase tracking-widest text-white/70 backdrop-blur">
+        {label}
+      </div>
+      <div className="pointer-events-none absolute inset-x-3 bottom-3">
+        <div className="truncate font-display text-sm text-white" style={serifStyle}>
+          {reel.title}
+        </div>
+        <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">9:16 Reel</div>
+      </div>
+    </button>
+  );
+}
+
+function VimeoReelPlayer({ reel, onClose }: { reel: VimeoReel; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-black/95 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-5 py-4">
+        <button
+          type="button"
+          onClick={onClose}
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white transition hover:bg-white hover:text-black"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back
+        </button>
+        <div className="truncate pl-4 text-sm text-white/60">{reel.title}</div>
+      </div>
+      <div className="flex flex-1 items-center justify-center px-4 pb-8">
+        <div
+          className="relative h-full max-h-[80vh] overflow-hidden rounded-2xl border border-white/10 bg-black"
+          style={{ aspectRatio: "9/16" }}
+        >
+          <iframe
+            src={`https://player.vimeo.com/video/${reel.vimeoId}?autoplay=1&playsinline=1&title=0&byline=0&portrait=0`}
+            title={reel.title}
+            allow="autoplay; fullscreen; picture-in-picture"
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function BucketReelsGrid({
+  serifStyle,
+  vimeoReels = [],
+}: {
+  serifStyle?: React.CSSProperties;
+  vimeoReels?: VimeoReel[];
+}) {
   const { reels, loading, error } = useBucketReels();
   const [active, setActive] = useState<Reel | null>(null);
+  const [activeVimeo, setActiveVimeo] = useState<VimeoReel | null>(null);
   const close = useCallback(() => setActive(null), []);
+  const closeVimeo = useCallback(() => setActiveVimeo(null), []);
+
+  const total = reels.length + vimeoReels.length;
 
   return (
     <>
@@ -260,23 +358,32 @@ export function BucketReelsGrid({ serifStyle }: { serifStyle?: React.CSSProperti
         </div>
       )}
 
-      {!loading && error && (
+      {!loading && error && vimeoReels.length === 0 && (
         <p className="text-sm text-white/50">Reels couldn&apos;t be loaded right now.</p>
       )}
 
-      {!loading && !error && reels.length === 0 && (
+      {!loading && !error && total === 0 && (
         <p className="text-sm text-white/50">
           No reels uploaded yet — new vertical edits will appear here automatically.
         </p>
       )}
 
-      {reels.length > 0 && (
+      {!loading && total > 0 && (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+          {vimeoReels.map((reel, i) => (
+            <VimeoReelCard
+              key={reel.vimeoId}
+              reel={reel}
+              label={String(i + 1).padStart(2, "0")}
+              onOpen={() => setActiveVimeo(reel)}
+              serifStyle={serifStyle}
+            />
+          ))}
           {reels.map((reel, i) => (
             <ReelCard
               key={reel.name}
               reel={reel}
-              index={i}
+              index={i + vimeoReels.length}
               onOpen={() => setActive(reel)}
               serifStyle={serifStyle}
             />
@@ -285,6 +392,8 @@ export function BucketReelsGrid({ serifStyle }: { serifStyle?: React.CSSProperti
       )}
 
       {active && <ReelPlayer reel={active} onClose={close} />}
+      {activeVimeo && <VimeoReelPlayer reel={activeVimeo} onClose={closeVimeo} />}
     </>
   );
 }
+
