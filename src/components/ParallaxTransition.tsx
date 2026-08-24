@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Link } from "@tanstack/react-router";
+
 import { ArrowDown } from "lucide-react";
 import parallaxBg from "@/assets/parallax-bg.jpg";
 
@@ -99,12 +99,12 @@ export function ParallaxTransition() {
             <p className="mt-6 text-muted-foreground max-w-xl mx-auto">
               Every frame is chosen. Every beat, deliberate. Meet the editor behind the work.
             </p>
-            <Link
-              to="/about"
+            <a
+              href="#about"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-5 py-2.5 text-sm font-medium text-primary backdrop-blur hover:bg-primary/20 transition"
             >
               Read the story
-            </Link>
+            </a>
           </motion.div>
         </motion.div>
 
