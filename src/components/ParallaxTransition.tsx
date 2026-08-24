@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Link } from "@tanstack/react-router";
+
 import { ArrowDown } from "lucide-react";
 import parallaxBg from "@/assets/parallax-bg.jpg";
 
