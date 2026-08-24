@@ -308,10 +308,10 @@ function HomePage() {
               serifStyle={serifStyle}
               vimeoReels={[
                 {
-                  vimeoId: "1217208151",
-                  title: "Paysft Reel",
+                  vimeoId: "1220771487",
+                  title: "Property Check Reel",
                   poster:
-                    "https://i.vimeocdn.com/video/2188834519-4d242cb85b0c86129cd0bade75920ccd3085bf49a2a6eef66da11ba1c1538d19-d_720",
+                    "https://i.vimeocdn.com/video/2193304965-e976c8c2fb816cebd8c6a6232d5de3627cc04fd03bb0c7bfe82430fcdb18fa8b-d_640",
                 },
               ]}
             />
