@@ -125,9 +125,10 @@ const videoGroups: {
       {
         title: "Sentrae Demo Video",
         vimeoId: "1225563958",
-        duration: "Demo",
+        duration: "1:45",
         blurb: "Product walkthrough edit",
-        thumb: "",
+        thumb:
+          "https://i.vimeocdn.com/video/2199320048-1983021232a191f5eb6ca793e634a784adfb5f9599c512f93a00151e20b19ada-d_640?region=us",
       },
     ],
   },
