@@ -120,6 +120,18 @@ const videoGroups: {
   videos: { title: string; vimeoId: string; duration: string; blurb: string; thumb: string }[];
 }[] = [
   {
+    heading: "Product Demos",
+    videos: [
+      {
+        title: "Sentrae Demo Video",
+        vimeoId: "1225563958",
+        duration: "Demo",
+        blurb: "Product walkthrough edit",
+        thumb: "",
+      },
+    ],
+  },
+  {
     heading: "Motion Graphics",
     videos: [
       {
@@ -161,19 +173,6 @@ const videoGroups: {
       },
     ],
   },
-  {
-    heading: "Product Demos",
-    videos: [
-      {
-        title: "Sentrae Demo Video",
-        vimeoId: "1225563958",
-        duration: "Demo",
-        blurb: "Product walkthrough edit",
-        thumb: "",
-      },
-    ],
-  },
-
 ];
 
 
